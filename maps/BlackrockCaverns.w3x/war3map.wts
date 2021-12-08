@@ -1,0 +1,1681 @@
+﻿STRING 1
+{
+Blackrock Caverns alpha
+}
+
+STRING 2
+{
+A few
+}
+
+STRING 3
+{
+A Wow dungeon.
+}
+
+STRING 4
+{
+Unknown
+}
+
+STRING 5
+{
+Player 1
+}
+
+STRING 6
+{
+Player 2
+}
+
+STRING 7
+{
+Player 3
+}
+
+STRING 8
+{
+Twilight's Hammer
+}
+
+STRING 9
+{
+Player 5
+}
+
+STRING 10
+{
+Player 7
+}
+
+STRING 13
+// Units: h001 (Female Cultist), Name (Name)
+{
+Female Cultist
+}
+
+STRING 14
+// Units: o000 (Raz the Crazed), Name (Name)
+{
+Raz the Crazed
+}
+
+STRING 15
+// Units: h002 (Twilight Torturer), Name (Name)
+{
+Twilight Torturer
+}
+
+STRING 16
+// Units: n001 (Crazed Mage), Name (Name)
+{
+Crazed Mage
+}
+
+STRING 17
+// Units: n000 (Twilight Sadist), Name (Name)
+{
+Twilight Sadist
+}
+
+STRING 18
+// Units: n003 (Evolved Twilight Zealot), Name (Name)
+{
+Evolved Twilight Zealot
+}
+
+STRING 19
+// Units: n002 (Chains of Woe), Name (Name)
+{
+Chains of Woe
+}
+
+STRING 20
+// Units: E000 (Tauren Druid (Resto)), Name (Name)
+{
+Tauren Druid (Resto)
+}
+
+STRING 21
+// Units: E000 (Tauren Druid (Resto)), Tip (Tooltip - Basic)
+{
+Tauren Druid (Resto)
+}
+
+STRING 23
+// Units: H000 (Troll Mage (Fire)), Name (Name)
+{
+Troll Mage (Fire)
+}
+
+STRING 24
+// Units: H000 (Troll Mage (Fire)), Tip (Tooltip - Basic)
+{
+Fire Mage
+}
+
+STRING 26
+// Units: H000 (Troll Mage (Fire)), Propernames (Proper Names)
+{
+Kuz'ka
+}
+
+STRING 27
+// Units: O001 (Human Paladin (Protection)), Name (Name)
+{
+Human Paladin (Protection)
+}
+
+STRING 28
+// Units: O001 (Human Paladin (Protection)), Tip (Tooltip - Basic)
+{
+Protection Paladin
+}
+
+STRING 30
+// Units: nDUM (Dummy), Name (Name)
+{
+Dummy
+}
+
+STRING 31
+// Units: h003 (Training Dummy), Name (Name)
+{
+Training Dummy
+}
+
+STRING 32
+// Units: e001 (BuyDummy), Name (Name)
+{
+BuyDummy
+}
+
+STRING 33
+// Units: e002 (Sight Dummy), Name (Name)
+{
+Sight Dummy
+}
+
+STRING 34
+// Destructibles: B000 (Force Platform), Name (Name)
+{
+Force Platform
+}
+
+STRING 35
+// Doodads: D000 (Magma River), Name (Name)
+{
+Magma River
+}
+
+STRING 36
+// Doodads: D001 (Magma Waterfall), Name (Name)
+{
+Magma Waterfall
+}
+
+STRING 37
+// Doodads: D002 (Metal Bar), Name (Name)
+{
+Metal Bar
+}
+
+STRING 38
+// Doodads: D003 (Metal Bar Horizontal), Name (Name)
+{
+Metal Bar Horizontal
+}
+
+STRING 39
+// Doodads: D004 (Fort Wall), Name (Name)
+{
+Fort Wall
+}
+
+STRING 40
+// Doodads: D005 (Metal Bar Diagonal), Name (Name)
+{
+Metal Bar Diagonal
+}
+
+STRING 41
+// Doodads: D006 (Water), Name (Name)
+{
+Water
+}
+
+STRING 42
+// Doodads: D007 (Platform), Name (Name)
+{
+Platform
+}
+
+STRING 43
+// Doodads: D008 (SpikeCage), Name (Name)
+{
+SpikeCage
+}
+
+STRING 44
+// Doodads: D009 (MetalFence), Name (Name)
+{
+MetalFence
+}
+
+STRING 45
+// Doodads: D00A (MetalFenceFlat), Name (Name)
+{
+MetalFenceFlat
+}
+
+STRING 46
+// Doodads: D00B (Lamp), Name (Name)
+{
+Lamp
+}
+
+STRING 47
+// Doodads: D00C (Demon Storm Static), Name (Name)
+{
+Demon Storm Static
+}
+
+STRING 48
+// Doodads: D00E (Chains Skew), Name (Name)
+{
+Chains Skew
+}
+
+STRING 49
+// Doodads: D00F (DragonDead), Name (Name)
+{
+DragonDead
+}
+
+STRING 50
+// Doodads: D00G (TeleportCircle), Name (Name)
+{
+TeleportCircle
+}
+
+STRING 51
+// Doodads: D00H (Platform Walkable), Name (Name)
+{
+Platform Walkable
+}
+
+STRING 52
+// Doodads: D00I (Forge), Name (Name)
+{
+Forge
+}
+
+STRING 53
+// Doodads: D00J (Twilight Brazier Glowing), Name (Name)
+{
+Twilight Brazier Glowing
+}
+
+STRING 54
+// Doodads: D00K (Twilight Cage), Name (Name)
+{
+Twilight Cage
+}
+
+STRING 55
+// Doodads: D00L (Twilight Lamp Glowing), Name (Name)
+{
+Twilight Lamp Glowing
+}
+
+STRING 56
+// Doodads: D00M (GenericLight), Name (Name)
+{
+GenericLight
+}
+
+STRING 57
+// Doodads: D00N (Tent), Name (Name)
+{
+Tent
+}
+
+STRING 58
+// Doodads: D00O (Tent2), Name (Name)
+{
+Tent2
+}
+
+STRING 59
+// Doodads: D00P (MetalBar2), Name (Name)
+{
+MetalBar2
+}
+
+STRING 60
+// Abilities: A000 (Shackles), Name (Name)
+{
+Shackles
+}
+
+STRING 61
+// Abilities: A001 (Grievous Whirl), Name (Name)
+{
+Grievous Whirl
+}
+
+STRING 62
+// Abilities: A002 (Chains of Woe), Name (Name)
+{
+Chains of Woe
+}
+
+STRING 63
+// Abilities: A003 (Chains of Woe Ensnare), Name (Name)
+{
+Chains of Woe Ensnare
+}
+
+STRING 64
+// Abilities: A004 (Quake), Name (Name)
+{
+Quake
+}
+
+STRING 65
+// Abilities: A005 (Wild Growth), Ubertip (Tooltip - Normal - Extended)
+{
+Heals all injured allies in 500 range of the target over 8 sec. Healing starts high and declines over the duration.|n|n|cffffd9b3Cast time:|r Instant
+}
+
+STRING 66
+// Abilities: A005 (Wild Growth), Ubertip (Tooltip - Normal - Extended)
+{
+Heals all injured allies in 500 range of the target over 8 sec. Healing starts high and declines over the duration.|n|n|cffffd9b3Cast time:|r Instant
+}
+
+STRING 67
+// Abilities: A005 (Wild Growth), Ubertip (Tooltip - Normal - Extended)
+{
+Heals all injured allies in 500 range of the target over 8 sec. Healing starts high and declines over the duration.|n|n|cffffd9b3Cast time:|r Instant
+}
+
+STRING 68
+// Abilities: A005 (Wild Growth), Tip (Tooltip - Normal)
+{
+Wild Growth (R)
+}
+
+STRING 69
+// Abilities: A005 (Wild Growth), Tip (Tooltip - Normal)
+{
+Wild Growth (R)
+}
+
+STRING 70
+// Abilities: A005 (Wild Growth), Tip (Tooltip - Normal)
+{
+Wild Growth (R)
+}
+
+STRING 71
+// Abilities: A005 (Wild Growth), Name (Name)
+{
+Wild Growth
+}
+
+STRING 72
+// Abilities: A005 (Wild Growth), Hotkey (Hotkey - Normal)
+{
+R
+}
+
+STRING 73
+// Abilities: A006 (Nourish), Ubertip (Tooltip - Normal - Extended)
+{
+Heals a targeted unit. If target has a Rejuvenation active, the heal is increased by 20%.|n|n|cffffd9b3Base cast time: |r2 seconds
+}
+
+STRING 74
+// Abilities: A006 (Nourish), Ubertip (Tooltip - Normal - Extended)
+{
+Heals a targeted unit. If target has a Rejuvenation active, the heal is increased by 20%.|n|n|cffffd9b3Base cast time: |r2 seconds
+}
+
+STRING 75
+// Abilities: A006 (Nourish), Ubertip (Tooltip - Normal - Extended)
+{
+Heals a targeted unit. If target has a Rejuvenation active, the heal is increased by 20%.|n|n|cffffd9b3Base cast time: |r2 seconds
+}
+
+STRING 76
+// Abilities: A006 (Nourish), Tip (Tooltip - Normal)
+{
+Nourish (W)
+}
+
+STRING 77
+// Abilities: A006 (Nourish), Tip (Tooltip - Normal)
+{
+Nourish (W)
+}
+
+STRING 78
+// Abilities: A006 (Nourish), Tip (Tooltip - Normal)
+{
+Nourish (W)
+}
+
+STRING 79
+// Abilities: A006 (Nourish), Name (Name)
+{
+Nourish
+}
+
+STRING 80
+// Abilities: A006 (Nourish), Hotkey (Hotkey - Normal)
+{
+W
+}
+
+STRING 81
+// Abilities: A007 (Rejuvenation), Ubertip (Tooltip - Normal - Extended)
+{
+Heals a target friendly unit over time.|n|n|cffffd9b3Cast time: |rInstant
+}
+
+STRING 82
+// Abilities: A007 (Rejuvenation), Ubertip (Tooltip - Normal - Extended)
+{
+Heals a target friendly unit over time.|n|n|cffffd9b3Cast time: |rInstant
+}
+
+STRING 83
+// Abilities: A007 (Rejuvenation), Ubertip (Tooltip - Normal - Extended)
+{
+Heals a target friendly unit over time.|n|n|cffffd9b3Cast time: |rInstant
+}
+
+STRING 84
+// Abilities: A007 (Rejuvenation), Tip (Tooltip - Normal)
+{
+Rejuvenation (Q)
+}
+
+STRING 85
+// Abilities: A007 (Rejuvenation), Tip (Tooltip - Normal)
+{
+Rejuvenation (Q)
+}
+
+STRING 86
+// Abilities: A007 (Rejuvenation), Tip (Tooltip - Normal)
+{
+Rejuvenation (Q)
+}
+
+STRING 87
+// Abilities: A007 (Rejuvenation), Name (Name)
+{
+Rejuvenation
+}
+
+STRING 88
+// Abilities: A007 (Rejuvenation), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 89
+// Abilities: A008 (Swiftmend), Ubertip (Tooltip - Normal - Extended)
+{
+Consumes Rejuvenation effect on a friendly target to instantly heal the them.|n|n|cffffd9b3Cast time: Instant|nCooldown 15 sec.
+}
+
+STRING 90
+// Abilities: A008 (Swiftmend), Ubertip (Tooltip - Normal - Extended)
+{
+Consumes Rejuvenation effect on a friendly target to instantly heal the them.|n|n|cffffd9b3Cast time: Instant|nCooldown 25 sec.
+}
+
+STRING 91
+// Abilities: A008 (Swiftmend), Ubertip (Tooltip - Normal - Extended)
+{
+Consumes Rejuvenation effect on a friendly target to instantly heal the them.|n|n|cffffd9b3Cast time: Instant|nCooldown 35 sec.
+}
+
+STRING 92
+// Abilities: A008 (Swiftmend), Tip (Tooltip - Normal)
+{
+Swiftmend (E)
+}
+
+STRING 93
+// Abilities: A008 (Swiftmend), Tip (Tooltip - Normal)
+{
+Swiftmend (E)
+}
+
+STRING 94
+// Abilities: A008 (Swiftmend), Tip (Tooltip - Normal)
+{
+Swiftmend (E)
+}
+
+STRING 95
+// Abilities: A008 (Swiftmend), Name (Name)
+{
+Swiftmend
+}
+
+STRING 96
+// Abilities: A008 (Swiftmend), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 97
+// Abilities: A009 (Chaos Bolt), Ubertip (Tooltip - Normal - Extended)
+{
+Sends a bolt of chaotic fire at the enemy, dealing high Fire damage. Chaos Bolt pierces through all absorption effects and cannot be resisted.|n|n|cff80ffffAffected by: Fire and Brimstone, Backdraft|r|n|cffffd9b3Cast time: 2.5|r
+}
+
+STRING 98
+// Abilities: A009 (Chaos Bolt), Ubertip (Tooltip - Normal - Extended)
+{
+Sends a bolt of chaotic fire at the enemy, dealing high Fire damage. Chaos Bolt pierces through all absorption effects and cannot be resisted.|n|n|cff80ffffAffected by: Fire and Brimstone, Backdraft|r|n|cffffd9b3Cast time: 2.5|r
+}
+
+STRING 99
+// Abilities: A009 (Chaos Bolt), Ubertip (Tooltip - Normal - Extended)
+{
+Sends a bolt of chaotic fire at the enemy, dealing high Fire damage. Chaos Bolt pierces through all absorption effects and cannot be resisted.|n|n|cff80ffffAffected by: Fire and Brimstone, Backdraft|r|n|cffffd9b3Cast time: 2.5|r
+}
+
+STRING 100
+// Abilities: A009 (Chaos Bolt), Tip (Tooltip - Normal)
+{
+Chaos Bolt (R)
+}
+
+STRING 101
+// Abilities: A009 (Chaos Bolt), Tip (Tooltip - Normal)
+{
+Chaos Bolt (R)
+}
+
+STRING 102
+// Abilities: A009 (Chaos Bolt), Tip (Tooltip - Normal)
+{
+Chaos Bolt (R)
+}
+
+STRING 103
+// Abilities: A009 (Chaos Bolt), Name (Name)
+{
+Chaos Bolt
+}
+
+STRING 104
+// Abilities: A009 (Chaos Bolt), Hotkey (Hotkey - Normal)
+{
+R
+}
+
+STRING 105
+// Abilities: A00A (Combustion), Unhotkey (Hotkey - Turn Off)
+{
+T
+}
+
+STRING 106
+// Abilities: A00A (Combustion), Name (Name)
+{
+Combustion
+}
+
+STRING 107
+// Abilities: A00A (Combustion), Hotkey (Hotkey - Normal)
+{
+T
+}
+
+STRING 108
+// Abilities: A00A (Combustion), Tip (Tooltip - Normal)
+{
+Combustion (T)
+}
+
+STRING 109
+// Abilities: A00A (Combustion), Tip (Tooltip - Normal)
+{
+Combustion (T)
+}
+
+STRING 110
+// Abilities: A00A (Combustion), Tip (Tooltip - Normal)
+{
+Combustion (T)
+}
+
+STRING 111
+// Abilities: A00A (Combustion), Untip (Tooltip - Turn Off)
+{
+Combustion (T)
+}
+
+STRING 112
+// Abilities: A00A (Combustion), Untip (Tooltip - Turn Off)
+{
+Combustion (T)
+}
+
+STRING 113
+// Abilities: A00A (Combustion), Untip (Tooltip - Turn Off)
+{
+Combustion (T)
+}
+
+STRING 114
+// Abilities: A00A (Combustion), Ubertip (Tooltip - Normal - Extended)
+{
+On cast, grants 100% critical strike chance for 12 seconds.|n|n|cff80ffffPassive Ignite:|r|nCauses all damage you cause to ignite the target, burning it for 30% of the dealt damage each second for 10 seconds. The damage dealt to ignited target adds the damage to the existing dot and refreshes it. Ignite spreads to another target every 2 seconds.|n|n|cffffd9b3Cooldown 80s|r
+}
+
+STRING 115
+// Abilities: A00A (Combustion), Ubertip (Tooltip - Normal - Extended)
+{
+On cast, grants 200% critical strike chance for 22 seconds.|n|n|cff80ffffPassive Ignite:|r|nCauses all damage you cause to ignite the target, burning it for 30% of the dealt damage each second for 20 seconds. The damage dealt to ignited target adds the damage to the existing dot and refreshes it. Ignite spreads to another target every 2 seconds.|n|n|cffffd9b3Cooldown 80s|r
+}
+
+STRING 116
+// Abilities: A00A (Combustion), Ubertip (Tooltip - Normal - Extended)
+{
+On cast, grants 300% critical strike chance for 32 seconds.|n|n|cff80ffffPassive Ignite:|r|nCauses all damage you cause to ignite the target, burning it for 30% of the dealt damage each second for 30 seconds. The damage dealt to ignited target adds the damage to the existing dot and refreshes it. Ignite spreads to another target every 2 seconds.|n|n|cffffd9b3Cooldown 80s|r
+}
+
+STRING 117
+// Abilities: A00A (Combustion), Unubertip (Tooltip - Turn Off - Extended)
+{
+Grants 100% critical strike chance for 10 seconds.
+}
+
+STRING 118
+// Abilities: A00A (Combustion), Unubertip (Tooltip - Turn Off - Extended)
+{
+Grants 200% critical strike chance for 20 seconds.
+}
+
+STRING 119
+// Abilities: A00A (Combustion), Unubertip (Tooltip - Turn Off - Extended)
+{
+Grants 300% critical strike chance for 30 seconds.
+}
+
+STRING 120
+// Abilities: A00B (Conflagrate), Ubertip (Tooltip - Normal - Extended)
+{
+Instantly deals fire damage equal to 60% of your Immolate's periodic damage on the target. |n|n|cff80ffffPassive Backdraft:|r|nAfter casting Conflagrate, the cast time for your next three Incinerate and Chaos Bolt spells is reduced by 30%. Lasts 15 sec.|n|n|cffffd9b3Cast time: Instant|nCooldown: 10s|r
+}
+
+STRING 121
+// Abilities: A00B (Conflagrate), Ubertip (Tooltip - Normal - Extended)
+{
+Instantly deals fire damage equal to 60% of your Immolate's periodic damage on the target. On cast, gives Backdraft - reduces cast time of next 3 spells of Incinerate, Immolate and Chaos Bolt by 30%. |n|n|cffffd9b3Cast time: Instant|nCooldown: 20s|r
+}
+
+STRING 122
+// Abilities: A00B (Conflagrate), Ubertip (Tooltip - Normal - Extended)
+{
+Instantly deals fire damage equal to 60% of your Immolate's periodic damage on the target. On cast, gives Backdraft - reduces cast time of next 3 spells of Incinerate, Immolate and Chaos Bolt by 30%. |n|n|cffffd9b3Cast time: Instant|nCooldown: 30s|r
+}
+
+STRING 123
+// Abilities: A00B (Conflagrate), Tip (Tooltip - Normal)
+{
+Conflagrate (E)
+}
+
+STRING 124
+// Abilities: A00B (Conflagrate), Tip (Tooltip - Normal)
+{
+Conflagrate (E)
+}
+
+STRING 125
+// Abilities: A00B (Conflagrate), Tip (Tooltip - Normal)
+{
+Conflagrate (E)
+}
+
+STRING 126
+// Abilities: A00B (Conflagrate), Name (Name)
+{
+Conflagrate
+}
+
+STRING 127
+// Abilities: A00B (Conflagrate), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 128
+// Abilities: A00C (Create Healthstone), Ubertip (Tooltip - Normal - Extended)
+{
+Creates a Healthstone that can be used to instantly restore health equal to 20% of creator's health.|n|n|cffffd9b3Cast time: 3.5s|r
+}
+
+STRING 129
+// Abilities: A00C (Create Healthstone), Ubertip (Tooltip - Normal - Extended)
+{
+Creates a Healthstone that can be used to instantly restore health equal to 20% of creator's health.|n|n|cffffd9b3Cast time: 3.5s|r
+}
+
+STRING 130
+// Abilities: A00C (Create Healthstone), Ubertip (Tooltip - Normal - Extended)
+{
+Creates a Healthstone that can be used to instantly restore health equal to 20% of creator's health.|n|n|cffffd9b3Cast time: 3.5s|r
+}
+
+STRING 131
+// Abilities: A00C (Create Healthstone), Tip (Tooltip - Normal)
+{
+Create Healthstone (W)
+}
+
+STRING 132
+// Abilities: A00C (Create Healthstone), Tip (Tooltip - Normal)
+{
+Create Healthstone (W)
+}
+
+STRING 133
+// Abilities: A00C (Create Healthstone), Tip (Tooltip - Normal)
+{
+Create Healthstone (W)
+}
+
+STRING 134
+// Abilities: A00C (Create Healthstone), Name (Name)
+{
+Create Healthstone
+}
+
+STRING 135
+// Abilities: A00C (Create Healthstone), Hotkey (Hotkey - Normal)
+{
+W
+}
+
+STRING 136
+// Abilities: A00D (Curse of the Elements), Ubertip (Tooltip - Normal - Extended)
+{
+Curses the target for 30 sec, increasing magic damage taken by 8%.  Only one Curse per caster can be active on any one target.
+}
+
+STRING 137
+// Abilities: A00D (Curse of the Elements), Ubertip (Tooltip - Normal - Extended)
+{
+Curses the target for 30 sec, increasing magic damage taken by 8%.  Only one Curse per caster can be active on any one target.
+}
+
+STRING 138
+// Abilities: A00D (Curse of the Elements), Ubertip (Tooltip - Normal - Extended)
+{
+Curses the target for 30 sec, increasing magic damage taken by 8%.  Only one Curse per caster can be active on any one target.
+}
+
+STRING 139
+// Abilities: A00D (Curse of the Elements), Tip (Tooltip - Normal)
+{
+Curse of the Elements (D)
+}
+
+STRING 140
+// Abilities: A00D (Curse of the Elements), Tip (Tooltip - Normal)
+{
+Curse of the Elements (D)
+}
+
+STRING 141
+// Abilities: A00D (Curse of the Elements), Tip (Tooltip - Normal)
+{
+Curse of the Elements (D)
+}
+
+STRING 142
+// Abilities: A00D (Curse of the Elements), Name (Name)
+{
+Curse of the Elements
+}
+
+STRING 143
+// Abilities: A00D (Curse of the Elements), Hotkey (Hotkey - Normal)
+{
+D
+}
+
+STRING 144
+// Abilities: A00E (Entangling Roots), Ubertip (Tooltip - Normal - Extended)
+{
+Causes roots to burst from the ground, immobilizing and disarming a target enemy unit for <AEer,Dur1> seconds, and dealing <AEer,DataA1> damage per second.|n|n|cffffd9b3Cast time: Instant|r
+}
+
+STRING 145
+// Abilities: A00E (Entangling Roots), Tip (Tooltip - Normal)
+{
+Entangling Roots (F)
+}
+
+STRING 146
+// Abilities: A00E (Entangling Roots), Tip (Tooltip - Normal)
+{
+Entangling Roots (F)
+}
+
+STRING 147
+// Abilities: A00E (Entangling Roots), Tip (Tooltip - Normal)
+{
+Entangling Roots (F)
+}
+
+STRING 148
+// Abilities: A00E (Entangling Roots), Researchtip (Tooltip - Learn)
+{
+Learn Entangling Roots - [Level %d]
+}
+
+STRING 149
+// Abilities: A00E (Entangling Roots), Hotkey (Hotkey - Normal)
+{
+F
+}
+
+STRING 150
+// Abilities: A00F (Fire Blast), Ubertip (Tooltip - Normal - Extended)
+{
+Inflicts moderate Fire damage to the last targeted enemy.|n|n|cffffd9b3Cooldown 4.5s|r|n|cffffd9b3Castable while moving and while casting other spells.|r
+}
+
+STRING 151
+// Abilities: A00F (Fire Blast), Tip (Tooltip - Normal)
+{
+Fire Blast (E)
+}
+
+STRING 152
+// Abilities: A00F (Fire Blast), Name (Name)
+{
+Fire Blast
+}
+
+STRING 153
+// Abilities: A00F (Fire Blast), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 154
+// Abilities: A00G (Fireball), Ubertip (Tooltip - Normal - Extended)
+{
+Hurls a fiery ball that causes moderate Fire damage.|n|n|cffffd9b3Cast time: 2.5s|r
+}
+
+STRING 155
+// Abilities: A00G (Fireball), Ubertip (Tooltip - Normal - Extended)
+{
+Hurls a fiery ball that causes moderate Fire damage.|n|n|cffffd9b3Cast time: 2.5s|r
+}
+
+STRING 156
+// Abilities: A00G (Fireball), Ubertip (Tooltip - Normal - Extended)
+{
+Hurls a fiery ball that causes moderate Fire damage.|n|n|cffffd9b3Cast time: 2.5s|r
+}
+
+STRING 157
+// Abilities: A00G (Fireball), Tip (Tooltip - Normal)
+{
+Fireball (W)
+}
+
+STRING 158
+// Abilities: A00G (Fireball), Tip (Tooltip - Normal)
+{
+Fireball (W)
+}
+
+STRING 159
+// Abilities: A00G (Fireball), Tip (Tooltip - Normal)
+{
+Fireball (W)
+}
+
+STRING 160
+// Abilities: A00G (Fireball), Name (Name)
+{
+Fireball
+}
+
+STRING 161
+// Abilities: A00G (Fireball), Hotkey (Hotkey - Normal)
+{
+W
+}
+
+STRING 162
+// Abilities: A00H (Flamestrike), Ubertip (Tooltip - Normal - Extended)
+{
+Calls down a pillar of fire, burning all enemies within the area and dealing damage.|n|n|cffffd9b3Castable while moving, instant.|nCooldown: 6s|r
+}
+
+STRING 163
+// Abilities: A00H (Flamestrike), Ubertip (Tooltip - Normal - Extended)
+{
+Calls down a pillar of fire, burning all enemies within the area and dealing damage.|n|n|cffffd9b3Castable while moving, instant.|nCooldown: 6s|r
+}
+
+STRING 164
+// Abilities: A00H (Flamestrike), Ubertip (Tooltip - Normal - Extended)
+{
+Calls down a pillar of fire, burning all enemies within the area and dealing damage.|n|n|cffffd9b3Castable while moving, instant.|nCooldown: 6s|r
+}
+
+STRING 165
+// Abilities: A00H (Flamestrike), Tip (Tooltip - Normal)
+{
+Flamestrike (F)
+}
+
+STRING 166
+// Abilities: A00H (Flamestrike), Tip (Tooltip - Normal)
+{
+Flamestrike (F)
+}
+
+STRING 167
+// Abilities: A00H (Flamestrike), Tip (Tooltip - Normal)
+{
+Flamestrike (F)
+}
+
+STRING 168
+// Abilities: A00H (Flamestrike), Name (Name)
+{
+Flamestrike
+}
+
+STRING 169
+// Abilities: A00H (Flamestrike), Hotkey (Hotkey - Normal)
+{
+F
+}
+
+STRING 170
+// Abilities: A00I (Immolate), Ubertip (Tooltip - Normal - Extended)
+{
+Burns the enemy, dealing low Fire damage and then an additional substantial Fire damage over 15 sec.|n|n|cff80ffffPassive Fire and Brimstone:|r|nIncinerate and Chaos Bolt deal 15% increased damage against targets affected by Immolate spell.|n|n|cffffd9b3Cast time: |r2.0s
+}
+
+STRING 171
+// Abilities: A00I (Immolate), Ubertip (Tooltip - Normal - Extended)
+{
+Burns the enemy, dealing low Fire damage and then an additional substantial Fire damage over 25 sec.|n|n|cff80ffffPassive Fire and Brimstone:|r|nIncinerate and Chaos Bolt deal 25% increased damage against targets affected by Immolate spell.|n|n|cffffd9b3Cast time: |r2.0s
+}
+
+STRING 172
+// Abilities: A00I (Immolate), Ubertip (Tooltip - Normal - Extended)
+{
+Burns the enemy, dealing low Fire damage and then an additional substantial Fire damage over 35 sec.|n|n|cff80ffffPassive Fire and Brimstone:|r|nIncinerate and Chaos Bolt deal 35% increased damage against targets affected by Immolate spell.|n|n|cffffd9b3Cast time: |r2.0s
+}
+
+STRING 173
+// Abilities: A00I (Immolate), Tip (Tooltip - Normal)
+{
+Immolate (Q)
+}
+
+STRING 174
+// Abilities: A00I (Immolate), Tip (Tooltip - Normal)
+{
+Immolate (Q)
+}
+
+STRING 175
+// Abilities: A00I (Immolate), Tip (Tooltip - Normal)
+{
+Immolate (Q)
+}
+
+STRING 176
+// Abilities: A00I (Immolate), Name (Name)
+{
+Immolate
+}
+
+STRING 177
+// Abilities: A00I (Immolate), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 178
+// Abilities: A00J (Incinerate), Ubertip (Tooltip - Normal - Extended)
+{
+Deals low Fire damage to your target.|n|n|cff80ffffAffected by: Fire and Brimstone, Backdraft|r|n|cffffd9b3Cast time: 2.5|r
+}
+
+STRING 179
+// Abilities: A00J (Incinerate), Ubertip (Tooltip - Normal - Extended)
+{
+Deals low Fire damage to your target.|n|n|cff80ffffAffected by: Fire and Brimstone, Backdraft|r|n|cffffd9b3Cast time: 2.5|r
+}
+
+STRING 180
+// Abilities: A00J (Incinerate), Ubertip (Tooltip - Normal - Extended)
+{
+Deals low Fire damage to your target.|n|n|cff80ffffAffected by: Fire and Brimstone, Backdraft|r|n|cffffd9b3Cast time: 2.5|r
+}
+
+STRING 181
+// Abilities: A00J (Incinerate), Tip (Tooltip - Normal)
+{
+Incinerate (W)
+}
+
+STRING 182
+// Abilities: A00J (Incinerate), Tip (Tooltip - Normal)
+{
+Incinerate (W)
+}
+
+STRING 183
+// Abilities: A00J (Incinerate), Tip (Tooltip - Normal)
+{
+Incinerate (W)
+}
+
+STRING 184
+// Abilities: A00J (Incinerate), Name (Name)
+{
+Incinerate
+}
+
+STRING 185
+// Abilities: A00J (Incinerate), Hotkey (Hotkey - Normal)
+{
+W
+}
+
+STRING 186
+// Abilities: A00K (Tranquility), Ubertip (Tooltip - Normal - Extended)
+{
+Causes rains of healing energy to pour down in a large area, healing all friendly allied units in range each tick. Total 8 ticks.|n|n|cffffd9b3Channeled spell.|r
+}
+
+STRING 187
+// Abilities: A00K (Tranquility), Ubertip (Tooltip - Normal - Extended)
+{
+Causes rains of healing energy to pour down in a large area, healing all friendly allied units in range each tick. Total 8 ticks.|n|n|cffffd9b3Channeled spell.|r
+}
+
+STRING 188
+// Abilities: A00K (Tranquility), Ubertip (Tooltip - Normal - Extended)
+{
+Causes rains of healing energy to pour down in a large area, healing all friendly allied units in range each tick. Total 8 ticks.|n|n|cffffd9b3Channeled spell.|r
+}
+
+STRING 189
+// Abilities: A00K (Tranquility), Tip (Tooltip - Normal)
+{
+Tranquility (T)
+}
+
+STRING 190
+// Abilities: A00K (Tranquility), Tip (Tooltip - Normal)
+{
+Tranquility (T)
+}
+
+STRING 191
+// Abilities: A00K (Tranquility), Tip (Tooltip - Normal)
+{
+Tranquility (T)
+}
+
+STRING 192
+// Abilities: A00K (Tranquility), Name (Name)
+{
+Tranquility
+}
+
+STRING 193
+// Abilities: A00K (Tranquility), Hotkey (Hotkey - Normal)
+{
+T
+}
+
+STRING 194
+// Abilities: A00L (Revitalize), Name (Name)
+{
+Revitalize
+}
+
+STRING 195
+// Abilities: A00M (Crusader Strike), Ubertip (Tooltip - Normal - Extended)
+{
+An instant strike that deals damage based on weapon. Every third strike generates Holy Power. Consumes Holy Power for +40% extra damage.|n|n|cffffd9b3Cast time: Instant|r|n|cffffd9b3Cooldown 2s|r
+}
+
+STRING 196
+// Abilities: A00M (Crusader Strike), Ubertip (Tooltip - Normal - Extended)
+{
+An instant strike that deals damage based on weapon. Every third strike generates Holy Power. Consumes Holy Power for +40% extra damage.|n|n|cffffd9b3Cast time: Instant|r|n|cffffd9b3Cooldown 2s|r
+}
+
+STRING 197
+// Abilities: A00M (Crusader Strike), Ubertip (Tooltip - Normal - Extended)
+{
+An instant strike that deals damage based on weapon. Every third strike generates Holy Power. Consumes Holy Power for +40% extra damage.|n|n|cffffd9b3Cast time: Instant|r|n|cffffd9b3Cooldown 2s|r
+}
+
+STRING 198
+// Abilities: A00M (Crusader Strike), Tip (Tooltip - Normal)
+{
+Crusader Strike (Q)
+}
+
+STRING 199
+// Abilities: A00M (Crusader Strike), Tip (Tooltip - Normal)
+{
+Crusader Strike (Q)
+}
+
+STRING 200
+// Abilities: A00M (Crusader Strike), Tip (Tooltip - Normal)
+{
+Crusader Strike (Q)
+}
+
+STRING 201
+// Abilities: A00M (Crusader Strike), Name (Name)
+{
+Crusader Strike
+}
+
+STRING 202
+// Abilities: A00M (Crusader Strike), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 203
+// Abilities: A00N (Word of Glory), Ubertip (Tooltip - Normal - Extended)
+{
+Consumes Holy Power to instantly heal the target.|n|n|cffffd9b3Cast time: Instant|nCooldown 20 sec.
+}
+
+STRING 204
+// Abilities: A00N (Word of Glory), Ubertip (Tooltip - Normal - Extended)
+{
+Consumes Holy Power to instantly heal the target.|n|n|cffffd9b3Cast time: Instant|nCooldown 20 sec.
+}
+
+STRING 205
+// Abilities: A00N (Word of Glory), Ubertip (Tooltip - Normal - Extended)
+{
+Consumes Holy Power to instantly heal the target.|n|n|cffffd9b3Cast time: Instant|nCooldown 20 sec.
+}
+
+STRING 206
+// Abilities: A00N (Word of Glory), Tip (Tooltip - Normal)
+{
+Word of Glory (W)
+}
+
+STRING 207
+// Abilities: A00N (Word of Glory), Tip (Tooltip - Normal)
+{
+Word of Glory (W)
+}
+
+STRING 208
+// Abilities: A00N (Word of Glory), Tip (Tooltip - Normal)
+{
+Word of Glory (W)
+}
+
+STRING 209
+// Abilities: A00N (Word of Glory), Name (Name)
+{
+Word of Glory
+}
+
+STRING 210
+// Abilities: A00N (Word of Glory), Hotkey (Hotkey - Normal)
+{
+W
+}
+
+STRING 211
+// Abilities: A00O (Judgement), Ubertip (Tooltip - Normal - Extended)
+{
+Strike the target with holy damage, forcing it to attack you.|n|n|cffffd9b3Cast time: Instant|nCooldown 8 sec.|nRange 400.
+}
+
+STRING 212
+// Abilities: A00O (Judgement), Ubertip (Tooltip - Normal - Extended)
+{
+Strike the target with holy damage, forcing it to attack you.|n|n|cffffd9b3Cast time: Instant|nCooldown 8 sec.|nRange 550.
+}
+
+STRING 213
+// Abilities: A00O (Judgement), Ubertip (Tooltip - Normal - Extended)
+{
+Strike the target with holy damage, forcing it to attack you.|n|n|cffffd9b3Cast time: Instant|nCooldown 8 sec.|nRange 250.
+}
+
+STRING 214
+// Abilities: A00O (Judgement), Tip (Tooltip - Normal)
+{
+Judgement (E)
+}
+
+STRING 215
+// Abilities: A00O (Judgement), Tip (Tooltip - Normal)
+{
+Judgement (E)
+}
+
+STRING 216
+// Abilities: A00O (Judgement), Tip (Tooltip - Normal)
+{
+Judgement (E)
+}
+
+STRING 217
+// Abilities: A00O (Judgement), Name (Name)
+{
+Judgement
+}
+
+STRING 218
+// Abilities: A00O (Judgement), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 219
+// Abilities: A00P (Avenger Shield), Ubertip (Tooltip - Normal - Extended)
+{
+Hurls your shield at an enemy target, dealing damage based on hero Strength and stunning them briefly. The shield bounces off to 2 additional nearby enemies.|n|n|cffffd9b3Cast time: Instant|nCooldown 24 sec.
+}
+
+STRING 220
+// Abilities: A00P (Avenger Shield), Ubertip (Tooltip - Normal - Extended)
+{
+Hurls your shield at an enemy target, dealing damage based on hero Strength and stunning them briefly. The shield bounces off to 2 additional nearby enemies.|n|n|cffffd9b3Cast time: Instant|nCooldown 24 sec.
+}
+
+STRING 221
+// Abilities: A00P (Avenger Shield), Ubertip (Tooltip - Normal - Extended)
+{
+Hurls your shield at an enemy target, dealing damage based on hero Strength and stunning them briefly. The shield bounces off to 2 additional nearby enemies.|n|n|cffffd9b3Cast time: Instant|nCooldown 24 sec.
+}
+
+STRING 222
+// Abilities: A00P (Avenger Shield), Tip (Tooltip - Normal)
+{
+Avenger's Shield (R)
+}
+
+STRING 223
+// Abilities: A00P (Avenger Shield), Tip (Tooltip - Normal)
+{
+Avenger's Shield (R)
+}
+
+STRING 224
+// Abilities: A00P (Avenger Shield), Tip (Tooltip - Normal)
+{
+Avenger's Shield (R)
+}
+
+STRING 225
+// Abilities: A00P (Avenger Shield), Name (Name)
+{
+Avenger Shield
+}
+
+STRING 226
+// Abilities: A00P (Avenger Shield), Hotkey (Hotkey - Normal)
+{
+R
+}
+
+STRING 227
+// Abilities: A00Q (Divine Protection), Ubertip (Tooltip - Normal - Extended)
+{
+Reduces damage taken for the next 8 seconds by 30%.|n|n|cffffd9b3Cooldown 60s|r
+}
+
+STRING 228
+// Abilities: A00Q (Divine Protection), Tip (Tooltip - Normal)
+{
+Divine Protection (D)
+}
+
+STRING 229
+// Abilities: A00Q (Divine Protection), Name (Name)
+{
+Divine Protection
+}
+
+STRING 230
+// Abilities: A00Q (Divine Protection), Hotkey (Hotkey - Normal)
+{
+D
+}
+
+STRING 231
+// Abilities: A00R (Vindication), Name (Name)
+{
+Vindication
+}
+
+STRING 232
+// Abilities: A00T (Aura Holy Power), Name (Name)
+{
+Aura Holy Power
+}
+
+STRING 233
+// Abilities: A00U (Dummy Avenger Shield), Name (Name)
+{
+Dummy Avenger Shield
+}
+
+STRING 234
+// Abilities: A00V (Scorch), Ubertip (Tooltip - Normal - Extended)
+{
+Scorch the last targeted enemy for low Fire damage. Has +15% increased chance to critically strike. Deals bonus damage based on excess Crit rating.|n|n|cffffd9b3Base cast time: 1.5s|nCastable while moving.|r
+}
+
+STRING 235
+// Abilities: A00V (Scorch), Ubertip (Tooltip - Normal - Extended)
+{
+Scorch the last targeted enemy for low Fire damage. Has +15% increased chance to critically strike. Deals bonus damage based on excess Crit rating.|n|n|cffffd9b3Base cast time: 1.5s|nCastable while moving.|r
+}
+
+STRING 236
+// Abilities: A00V (Scorch), Ubertip (Tooltip - Normal - Extended)
+{
+Scorch the last targeted enemy for low Fire damage. Has +15% increased chance to critically strike. Deals bonus damage based on excess Crit rating.|n|n|cffffd9b3Base cast time: 1.5s|nCastable while moving.|r
+}
+
+STRING 237
+// Abilities: A00V (Scorch), Tip (Tooltip - Normal)
+{
+Scorch (Q)
+}
+
+STRING 238
+// Abilities: A00V (Scorch), Tip (Tooltip - Normal)
+{
+Scorch (Q)
+}
+
+STRING 239
+// Abilities: A00V (Scorch), Tip (Tooltip - Normal)
+{
+Scorch (Q)
+}
+
+STRING 240
+// Abilities: A00V (Scorch), Name (Name)
+{
+Scorch
+}
+
+STRING 241
+// Abilities: A00V (Scorch), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 242
+// Abilities: A00W (Scorch), Name (Name)
+{
+Scorch
+}
+
+STRING 243
+// Abilities: A00W (Scorch), EditorSuffix (Editor Suffix)
+{
+(instant)
+}
+
+STRING 244
+// Abilities: A00W (Scorch), Unhotkey (Hotkey - Turn Off)
+{
+Q
+}
+
+STRING 245
+// Abilities: A00W (Scorch), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 246
+// Abilities: A00W (Scorch), Tip (Tooltip - Normal)
+{
+Scorch (Q)
+}
+
+STRING 247
+// Abilities: A00W (Scorch), Ubertip (Tooltip - Normal - Extended)
+{
+Scorch the last targeted enemy for low Fire damage.|n|n|cffffd9b3Cast time: 2.0 sec
+}
+
+STRING 248
+// Abilities: A00X (Pyroblast), Ubertip (Tooltip - Normal - Extended)
+{
+Hurls an immense fiery boulder that causes high Fire damage.|n|n|cff80ffffPassive Hot Streak:|n|rTwo consecutive critical strikes will make your next Pyroblast within 6.0 sec instant cast.|n|n|cffffd9b3Cast time: 3.5s|r
+}
+
+STRING 249
+// Abilities: A00X (Pyroblast), Ubertip (Tooltip - Normal - Extended)
+{
+Hurls an immense fiery boulder that causes high Fire damage.|n|n|cff80ffffPassive Hot Streak:|n|rTwo consecutive critical strikes will make your next Pyroblast within 6.0 sec instant cast.|n|n|cffffd9b3Cast time: 3.5s|r
+}
+
+STRING 250
+// Abilities: A00X (Pyroblast), Ubertip (Tooltip - Normal - Extended)
+{
+Hurls an immense fiery boulder that causes high Fire damage.|n|n|cff80ffffPassive Hot Streak:|n|rTwo consecutive critical strikes will make your next Pyroblast within 6.0 sec instant cast.|n|n|cffffd9b3Cast time: 3.5s|r
+}
+
+STRING 251
+// Abilities: A00X (Pyroblast), Tip (Tooltip - Normal)
+{
+Pyroblast (W)
+}
+
+STRING 252
+// Abilities: A00X (Pyroblast), Tip (Tooltip - Normal)
+{
+Pyroblast (W)
+}
+
+STRING 253
+// Abilities: A00X (Pyroblast), Tip (Tooltip - Normal)
+{
+Pyroblast (W)
+}
+
+STRING 254
+// Abilities: A00X (Pyroblast), Name (Name)
+{
+Pyroblast
+}
+
+STRING 255
+// Abilities: A00X (Pyroblast), Hotkey (Hotkey - Normal)
+{
+W
+}
+
+STRING 256
+// Abilities: A00Y (Dummy Pyroblast), Name (Name)
+{
+Dummy Pyroblast
+}
+
+STRING 257
+// Abilities: A00Z (Aura Hotstreak), Name (Name)
+{
+Aura Hotstreak
+}
+
+STRING 258
+// Abilities: A010 (Ignite), Name (Name)
+{
+Ignite
+}
+
+STRING 259
+// Abilities: A011 (Aura Ignite), Name (Name)
+{
+Aura Ignite
+}
+
+STRING 260
+// Abilities: A012 (Aura Wild Growth), Name (Name)
+{
+Aura Wild Growth
+}
+
+STRING 261
+// Buffs/Effects: BOac (), Bufftip (Tooltip)
+{
+Icy Veins
+}
+
+STRING 262
+// Buffs/Effects: BOac (), Buffubertip (Tooltip - Extended)
+{
+This unit has increased attack damage.
+}
+
+STRING 263
+// Buffs/Effects: B000 ((Wild Growth)), EditorName (Name (Editor Only))
+{
+(Wild Growth)
+}
+
+STRING 264
+// Buffs/Effects: B000 ((Wild Growth)), Bufftip (Tooltip)
+{
+Wild Growth
+}
+
+STRING 265
+// Buffs/Effects: B000 ((Wild Growth)), Buffubertip (Tooltip - Extended)
+{
+This unit has Wild Growth; it is healing hit points over time.
+}
+
+STRING 266
+// Buffs/Effects: B001 ((Holy Power)), EditorName (Name (Editor Only))
+{
+(Holy Power)
+}
+
+STRING 267
+// Buffs/Effects: B001 ((Holy Power)), Bufftip (Tooltip)
+{
+Holy Power
+}
+
+STRING 268
+// Buffs/Effects: B001 ((Holy Power)), Buffubertip (Tooltip - Extended)
+{
+Powers up certain abilities.
+}
+
+STRING 269
+// Buffs/Effects: B002 ((Vindication)), EditorName (Name (Editor Only))
+{
+(Vindication)
+}
+
+STRING 270
+// Buffs/Effects: B002 ((Vindication)), Bufftip (Tooltip)
+{
+Vindication
+}
+
+STRING 271
+// Buffs/Effects: B002 ((Vindication)), Buffubertip (Tooltip - Extended)
+{
+Reduced damage and attack speed.
+}
+
+STRING 272
+// Buffs/Effects: B003 ((Divine Protection)), EditorName (Name (Editor Only))
+{
+(Divine Protection)
+}
+
+STRING 273
+// Buffs/Effects: B003 ((Divine Protection)), Bufftip (Tooltip)
+{
+Divine Protection
+}
+
+STRING 274
+// Buffs/Effects: B003 ((Divine Protection)), Buffubertip (Tooltip - Extended)
+{
+Reduces damage taken.
+}
+
+STRING 275
+// Buffs/Effects: B004 ((Hot Streak!)), EditorName (Name (Editor Only))
+{
+(Hot Streak!)
+}
+
+STRING 276
+// Buffs/Effects: B004 ((Hot Streak!)), Bufftip (Tooltip)
+{
+Hot Streak!
+}
+
+STRING 277
+// Buffs/Effects: B004 ((Hot Streak!)), Buffubertip (Tooltip - Extended)
+{
+Your next Pyroblast is instant.
+}
+
+STRING 278
+// Buffs/Effects: B005 ((Ignite)), Bufftip (Tooltip)
+{
+Ignite
+}
+
+STRING 279
+// Buffs/Effects: B005 ((Ignite)), Buffubertip (Tooltip - Extended)
+{
+This unit takes damage over time.
+}
+
+STRING 280
+// Buffs/Effects: B005 ((Ignite)), EditorName (Name (Editor Only))
+{
+(Ignite)
+}
+
+STRING 281
+// Buffs/Effects: B006 ((Heating Up)), EditorName (Name (Editor Only))
+{
+(Heating Up)
+}
+
+STRING 282
+// Buffs/Effects: B006 ((Heating Up)), Bufftip (Tooltip)
+{
+Heating Up
+}
+
+STRING 283
+// Buffs/Effects: B006 ((Heating Up)), Buffubertip (Tooltip - Extended)
+{
+Crit again to get Hot Streak!
+}
+
+STRING 285
+// Units: H000 (Troll Mage (Fire)), Ubertip (Tooltip - Extended)
+{
+Destructive fire magic. Single target burst with cleave aoe.
+}
+
+STRING 286
+// Units: O001 (Human Paladin (Protection)), Ubertip (Tooltip - Extended)
+{
+Holy Warrior, dedicated tank. Exceptional at absorbing and healing damage and keeping aggro.
+}
+
+STRING 287
+// Units: E000 (Tauren Druid (Resto)), Ubertip (Tooltip - Extended)
+{
+One with the Earthmother, a druid healer with lots of healing over time and aoe healing ability.
+}
+
+STRING 288
+{
+Azeroth
+}
+

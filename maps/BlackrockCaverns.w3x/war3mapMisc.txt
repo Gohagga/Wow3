@@ -1,0 +1,6 @@
+[Misc]
+AgiDefenseBonus=0.01
+IntManaBonus=5.0
+MaxHeroLevel=25
+StrHitPointBonus=5.0
+
