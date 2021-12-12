@@ -3,6 +3,24 @@
   "minifyScript": false,
   "gameExecutable": "C:\\Program Files (x86)\\Warcraft III\\_retail_\\x86_64\\Warcraft III.exe",
   "outputFolder": "./dist/bin",
+  "archiveOutputFolders": [
+    "./versions",
+    "%userprofile%\\Documents\\Warcraft III\\Maps\\Wow3"
+  ],
+  "version": {
+    "major": 0,
+    "minor": 1,
+    "build": 0
+  },
+  "mapInfo": {
+    "author": "The_Spellweaver",
+    "name": "Blackrock Caverns {version}",
+    "description": "This is a description",
+    "recommendedPlayers": "nobody should play this map",
+    "loadingScreenTitle": "{version}",
+    "loadingScreenSubtitle": "Blackrock Caverns",
+    "loadingScreenDescription": "THis is a yes map"
+  },
   "launchArgs": [
     "-launch",
     "-windowmode",

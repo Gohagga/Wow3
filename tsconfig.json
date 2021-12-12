@@ -3,6 +3,7 @@
     "baseUrl": "./src",
     "allowJs": true,
     "target": "es6",
+    "strict": true,
     "lib": [
       "es6"
     ],
@@ -18,7 +19,10 @@
     },
     "plugins": [
       {
-        "transform": "war3-transformer"
+        "transform": "war3-transformer",
+        "mapDir": "D:/wc3-projects/Wow3 Project/Wow3/maps/BlackrockCaverns.w3x",
+        "entryFile": "D:/wc3-projects/Wow3 Project/Wow3/src/main.ts",
+        "outputDir": "D:/wc3-projects/Wow3 Project/Wow3/dist/BlackrockCaverns.w3x"
       }
     ],
     "types": [

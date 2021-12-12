@@ -1,7 +1,9 @@
 import * as fs from "fs-extra";
 import * as path from "path";
-import War3Map from "mdx-m3-viewer/dist/cjs/parsers/w3x/map"
-import { compileMap, getFilesInDirectory, loadJsonFile, logger, toArrayBuffer, IProjectConfig } from "./utils";
+import War3Map from "mdx-m3-viewer/dist/cjs/parsers/w3x/map";
+import War3MapW3i from "mdx-m3-viewer/dist/cjs/parsers/w3x/w3i/file";
+import * as os from 'os';
+import { compileMap, getFilesInDirectory, loadJsonFile, logger, toArrayBuffer, IProjectConfig, saveJsonFile } from "./utils";
 
 function main() {
   const config: IProjectConfig = loadJsonFile("config.json");
@@ -17,7 +19,31 @@ function main() {
     fs.mkdirSync(config.outputFolder);
   }
 
-  createMapFromDir(`${config.outputFolder}/${config.mapFolder}`, `./dist/${config.mapFolder}`);
+  let v = config.version;
+  const version = `v${v.major}.${v.minor}.${v.build}`;
+  let mapFileName = config.mapFolder.replace('.w3x', '_' + version + '.w3x');
+  let archive = createMapFromDir(`./dist/${config.mapFolder}`);
+  
+  if (!archive) {
+    logger.error("Failed to save archive.");
+    return;
+  }
+
+  fs.writeFileSync(`${config.outputFolder}/${mapFileName}`, new Uint8Array(archive));
+  for (let p of config.archiveOutputFolders) {
+    let px = p.replace("%userprofile%", os.homedir());
+    if (!fs.existsSync(px)) {
+      fs.mkdirSync(px);
+      logger.info("Creating folder: " + px);
+    }
+    logger.info("Saving archive: " + px);
+    fs.writeFileSync(`${px}/${mapFileName}`, new Uint8Array(archive), { flag: 'w' });
+  }
+
+  logger.info("Finished!");
+  
+  config.version.build++;
+  saveJsonFile("config.json", config, 2);
 }
 
 /**
@@ -25,7 +51,7 @@ function main() {
  * @param output The output filename
  * @param dir The directory to create the archive from
  */
-export function createMapFromDir(output: string, dir: string) {
+export function createMapFromDir(dir: string) {
   const map = new War3Map();
   const files = getFilesInDirectory(dir);
 
@@ -42,16 +68,7 @@ export function createMapFromDir(output: string, dir: string) {
     }
   }
 
-  const result = map.save();
-
-  if (!result) {
-    logger.error("Failed to save archive.");
-    return;
-  }
-
-  fs.writeFileSync(output, new Uint8Array(result));
-
-  logger.info("Finished!");
+  return map.save();
 }
 
 main();
