@@ -12,4 +12,6 @@ export const enum ActionOrder {
     Threat,
 
     DamageDisplay,
+    
+    HotStreak
 }

@@ -1,7 +1,7 @@
 import { Unit } from "w3ts";
 import { Log } from "../../../Log";
 import { AbilityBase } from "../../../systems/abilities/AbilityBase";
-import { Wc3AbilityData } from "../../../systems/abilities/AbilityConfig";
+import { Wc3AbilityData } from "../../../systems/abilities/Wc3AbilityData";
 import { AbilityEvent } from "../../../systems/ability-events/event-models/AbilityEvent";
 import { IAbilityEventHandler } from "../../../systems/ability-events/IAbilityEventHandler";
 import { Coords } from "../../../systems/coord/Coords";
@@ -21,7 +21,7 @@ type FireballContext = {
 }
 
 export class Fireball extends AbilityBase {
-    UpdateUnitAbility(unit: Unit): void {
+    UpdateUnitSkill(unit: Unit): void {
         throw new Error("Method not implemented.");
     }
     
@@ -40,15 +40,12 @@ export class Fireball extends AbilityBase {
 
     Execute(e: AbilityEvent): boolean {
 
-        print("Fireball cast")
-
         let caster = e.caster;
         let target = e.targetUnit;
         if (!target) return false;
 
         let context: FireballContext = { caster, target };
         this.projectile.Cast(Coords.fromUnit(caster), target, 1, context, (context) => this.OnHit(context));
-        print("Projectile cast");
         return true;
     }
 

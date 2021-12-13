@@ -4,7 +4,7 @@ export const enum AttackType {
 
     Autoattack,
 
-    Magic,
+    Spell,
     Physical,
     Hybrid,
 }

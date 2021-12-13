@@ -4,6 +4,8 @@ export interface Wc3AbilityData {
 
     name: string,
 
+    orderId: number,
+    
     tooltip?: string,
 }
 

@@ -1,10 +1,13 @@
 import { Unit } from "w3ts";
+import { ISkillManager } from "../../systems/skill-manager/ISkillManager";
 import { ITalentTreeBuilder } from "../../systems/talents/Interfaces/ITalentTreeBuilder";
 import { ActivationEvent } from "../../systems/talents/Models/Talent";
 import { TalentTree } from "../../systems/talents/Models/TalentTree";
 import { TalentTreeBuilder } from "../../systems/talents/Models/TalentTreeBuilder";
 import { Fireball } from "../spells/fire-mage/Fireball";
 import { FireBlast } from "../spells/fire-mage/FireBlast";
+import { HotStreak } from "../spells/fire-mage/HotStreak";
+import { Pyroblast } from "../spells/fire-mage/Pyroblast";
 
 export class FireMage extends TalentTree {
 
@@ -17,9 +20,12 @@ export class FireMage extends TalentTree {
 
     constructor(
         unit: Unit,
+        private readonly skillManager: ISkillManager,
         private readonly abilities: {
             fireball: Fireball,
             fireBlast: FireBlast,
+            pyroblast: Pyroblast,
+            hotStreak: HotStreak,
     }) {
         super(unit);
         this.Initialize(new TalentTreeBuilder(this));
@@ -42,15 +48,11 @@ export class FireMage extends TalentTree {
 
     public Initialize(builder: ITalentTreeBuilder): void {
 
-        print("Initialize func called");
         builder.SetColumnsRows(4, 7);
-        print("cols rows set")
         builder.title = "Fire Mage";
-        print("title set")
-        builder.talentPoints = 6;
-        print("talent points set")
+        builder.talentPoints = 15;
 
-        let { fireball, fireBlast } = this.abilities;
+        let { fireball, fireBlast, pyroblast } = this.abilities;
         // builder.backgroundImage = "balancebg.blp";
 
         // The tree should be built with talents here
@@ -67,17 +69,14 @@ export class FireMage extends TalentTree {
             Text: "abc"
         }
 
-        let debugInfo = 0;
-        print(debugInfo++)
         // Fire Blast <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         builder.AddTalent(1, 2, {
             Name: 'Fire Blast',
             Description: "Instantly deal moderate fire damage to the last targeted enemy.|n|n|cffffd9b3Cast time: Instant|r|n|cffffd9b3Cooldown 6s|r",
             Icon: 'spell_fire_fireball',
             Dependency: { down: 1 },
-            OnActivate: (e) => fireBlast.AddToUnit(this.unit),
+            OnActivate: (e) => this.skillManager.UnitAddSkill(this.unit, fireBlast),
         });
-        print(debugInfo++)
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         // Scorch <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         builder.AddTalent(1, 0, {
@@ -87,18 +86,15 @@ export class FireMage extends TalentTree {
             OnActivate: (e) => {
             }
         });
-        print(debugInfo++)
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         // Pyroblast <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         builder.AddTalent(3, 0, {
             Name: "Pyroblast",
             Description: "Hurls an immense fiery boulder that causes high Fire damage.|n|n|cffffd9b3Cast time: 4 sec.",
             Icon: 'Spell_Fire_Fireball02',
-            OnActivate: (e) => {
-            }
+            OnActivate: (e) => this.skillManager.UnitAddSkill(this.unit, pyroblast),
         });
 
-        print(debugInfo++)
         // Firestarter
         builder.AddTalent(0, 1, {
             Name: "Firestarter",
@@ -107,7 +103,6 @@ export class FireMage extends TalentTree {
             Dependency: { right: 3 },
         });
 
-        print(debugInfo++)
         // Improved Scorch
         builder.AddMultirankTalent(1, 1, 3, lvl => {
             let bonus = 8
@@ -119,7 +114,6 @@ export class FireMage extends TalentTree {
             }
         });
 
-        print(debugInfo++)
         // Ignite
         builder.AddMultirankTalent(3, 1, 3, lvl => {
             return {
@@ -130,7 +124,6 @@ export class FireMage extends TalentTree {
             }
         });
 
-        print(debugInfo++)
         // Wildfire
         builder.AddTalent(2, 1, {
             Name: "Wildfire",
@@ -139,16 +132,15 @@ export class FireMage extends TalentTree {
             Dependency: { right: 1 }
         });
 
-        print(debugInfo++)
         // Hot Streak
         builder.AddTalent(3, 2, {
             Name: "Hot Streak",
             Description: "Two critical strikes within 3 sec will make your next Pyroblast within 6.0 sec instant cast.",
             Icon: 'ability_mage_hotstreak',
-            Dependency: { down: 1 }
+            Dependency: { down: 1 },
+            OnActivate: (e) => this.abilities.hotStreak.AddToUnit(this.unit),
         });
 
-        print(debugInfo++)
         // Impact
         builder.AddMultirankTalent(1, 3, 4, lvl => {
             let bonus = 8
@@ -160,7 +152,6 @@ export class FireMage extends TalentTree {
             };
         });
 
-        print(debugInfo++)
         // Faster Blaster
         builder.AddTalent(2, 3, {
             Name: "Faster Blaster",
@@ -169,7 +160,6 @@ export class FireMage extends TalentTree {
             Dependency: { left: 1 }
         });
 
-        print(debugInfo++)
         // Improved Hot Streak
         builder.AddTalent(3, 3, {
             Name: "Improved Hot Streak",
@@ -178,7 +168,6 @@ export class FireMage extends TalentTree {
             Dependency: { down: 1 },
         });
             
-        print(debugInfo++)
         // Critical Mass
         builder.AddMultirankTalent(0, 3, 3, lvl => {
             return {

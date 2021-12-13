@@ -21,7 +21,6 @@ export class DamageEvent {
         damageTypeCount: number,
         attackType: AttackType,
         damage: number,
-        strain: number,
         isCrit: boolean,
     }) { 
         this._source = data.source;
