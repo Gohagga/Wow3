@@ -1,6 +1,7 @@
 import { Destructable, Point, Unit } from "w3ts";
+import { IAbilityEvent } from "./IAbilityEvent";
 
-export class AbilityEvent {
+export class AbilityEvent implements IAbilityEvent {
 
     public get caster(): Unit { return Unit.fromEvent(); }
     public get targetUnit(): Unit | null {
@@ -16,5 +17,8 @@ export class AbilityEvent {
     public get targetPoint(): Point { return Point.fromHandle(GetSpellTargetLoc()); }
     public get abilityId(): number { return GetSpellAbilityId(); }
     public get abilityLevel(): number { return GetUnitAbilityLevel(GetTriggerUnit(), GetSpellAbilityId()); }
-    public get summonedUnit(): Unit { return Unit.fromHandle(GetSummonedUnit()); }
+    public get summonedUnit(): Unit | null {
+        let unit = GetSummonedUnit();
+        return unit == null ? null : Unit.fromHandle(unit);
+    }
 }

@@ -3,6 +3,7 @@ import { Log } from "../../../Log";
 import { AbilityBase } from "../../../systems/abilities/AbilityBase";
 import { Wc3AbilityData } from "../../../systems/abilities/Wc3AbilityData";
 import { AbilityEvent } from "../../../systems/ability-events/event-models/AbilityEvent";
+import { IAbilityEvent } from "../../../systems/ability-events/event-models/IAbilityEvent";
 import { IAbilityEventHandler } from "../../../systems/ability-events/IAbilityEventHandler";
 import { Coords } from "../../../systems/coord/Coords";
 import { IDelayedTargetEffect } from "../../../systems/dummies/interfaces/IDelayedTargetEffect";
@@ -38,7 +39,7 @@ export class Fireball extends AbilityBase {
         this.projectile = dummyAbilityFactory.CreateDelayedTargetEffect<FireballContext>(FourCC(config.dummyFireball.spellCodeId), config.dummyFireball.orderId);
     }
 
-    Execute(e: AbilityEvent): boolean {
+    Execute(e: IAbilityEvent): boolean {
 
         let caster = e.caster;
         let target = e.targetUnit;

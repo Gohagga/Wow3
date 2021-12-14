@@ -8,6 +8,7 @@ import { Fireball } from "../spells/fire-mage/Fireball";
 import { FireBlast } from "../spells/fire-mage/FireBlast";
 import { HotStreak } from "../spells/fire-mage/HotStreak";
 import { Pyroblast } from "../spells/fire-mage/Pyroblast";
+import { Scorch } from "../spells/fire-mage/Scorch";
 
 export class FireMage extends TalentTree {
 
@@ -26,6 +27,7 @@ export class FireMage extends TalentTree {
             fireBlast: FireBlast,
             pyroblast: Pyroblast,
             hotStreak: HotStreak,
+            scorch: Scorch,
     }) {
         super(unit);
         this.Initialize(new TalentTreeBuilder(this));
@@ -51,8 +53,6 @@ export class FireMage extends TalentTree {
         builder.SetColumnsRows(4, 7);
         builder.title = "Fire Mage";
         builder.talentPoints = 15;
-
-        let { fireball, fireBlast, pyroblast } = this.abilities;
         // builder.backgroundImage = "balancebg.blp";
 
         // The tree should be built with talents here
@@ -75,7 +75,7 @@ export class FireMage extends TalentTree {
             Description: "Instantly deal moderate fire damage to the last targeted enemy.|n|n|cffffd9b3Cast time: Instant|r|n|cffffd9b3Cooldown 6s|r",
             Icon: 'spell_fire_fireball',
             Dependency: { down: 1 },
-            OnActivate: (e) => this.skillManager.UnitAddSkill(this.unit, fireBlast),
+            OnActivate: (e) => this.skillManager.UnitAddSkill(this.unit, this.abilities.fireBlast),
         });
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         // Scorch <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -83,8 +83,7 @@ export class FireMage extends TalentTree {
             Name: "Scorch",
             Description: "Scorch the last targeted enemy with fire damage.|n|n|cffffd9b3Cast time: 2 sec.",
             Icon: 'SoulBurn',
-            OnActivate: (e) => {
-            }
+            OnActivate: (e) => this.skillManager.UnitAddSkill(this.unit, this.abilities.scorch),
         });
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         // Pyroblast <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -92,7 +91,7 @@ export class FireMage extends TalentTree {
             Name: "Pyroblast",
             Description: "Hurls an immense fiery boulder that causes high Fire damage.|n|n|cffffd9b3Cast time: 4 sec.",
             Icon: 'Spell_Fire_Fireball02',
-            OnActivate: (e) => this.skillManager.UnitAddSkill(this.unit, pyroblast),
+            OnActivate: (e) => this.skillManager.UnitAddSkill(this.unit, this.abilities.pyroblast),
         });
 
         // Firestarter
@@ -101,6 +100,7 @@ export class FireMage extends TalentTree {
             Description: "Scorch is castable while moving and attacking.",
             Icon: 'spell_fire_playingwithfire',
             Dependency: { right: 3 },
+            OnActivate: (e) => this.abilities.scorch.UpdateUnitConfig(this.unit, cb => cb.Firestarter = true),
         });
 
         // Improved Scorch
@@ -157,7 +157,11 @@ export class FireMage extends TalentTree {
             Name: "Faster Blaster",
             Description: "Fire Blast is castable while moving and castable while casting other spells.",
             Icon: 'IncinerateWoW',
-            Dependency: { left: 1 }
+            Dependency: { left: 1 },
+            OnActivate: (e) => {
+                this.abilities.pyroblast.UpdateUnitConfig(this.unit, cb => cb.NonInterruptOrderId = this.abilities.fireBlast.orderId);
+                this.abilities.scorch.UpdateUnitConfig(this.unit, cb => cb.NonInterruptOrderId = this.abilities.fireBlast.orderId);
+            },
         });
 
         // Improved Hot Streak

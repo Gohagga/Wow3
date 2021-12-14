@@ -1,10 +1,12 @@
 import { Point, Unit, Widget } from "w3ts";
+import { IAbilityEvent } from "../../systems/ability-events/event-models/IAbilityEvent";
 
 export interface QueuedOrder {
     id: number,
-    type: 'target' | 'point' | 'immediate',
+    type: 'target' | 'point' | 'immediate' | 'effect',
     targetWidget?: Widget,
     targetPoint?: Point,
+    effect?: () => void,
 }
 
 export class OrderQueueService {
@@ -79,13 +81,16 @@ export class OrderQueueService {
                 switch (order.type) {
                     case "target":
                         if (order.targetWidget) unit.issueTargetOrder(order.id, order.targetWidget);
-                    break;
+                        break;
                     case 'point':
                         if (order.targetPoint) unit.issuePointOrder(order.id, order.targetPoint);
-                    break;
+                        break;
                     case 'immediate':
                         unit.issueImmediateOrder(order.id);
-                    break;
+                        break;
+                    case 'effect':
+                        if (order.effect) order.effect();
+                        break;
                 }
                 return true;
             }

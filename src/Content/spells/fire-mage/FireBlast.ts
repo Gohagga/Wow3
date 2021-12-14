@@ -1,9 +1,11 @@
-import { Timer, Unit } from "w3ts";
+import { Effect, Timer, Unit } from "w3ts";
 import { Log } from "../../../Log";
 import { IDamageService } from "../../../services/damage/IDamageService";
+import { LastTargetService } from "../../../services/last-target/LastTargetService";
 import { AbilityBase } from "../../../systems/abilities/AbilityBase";
 import { Wc3AbilityData } from "../../../systems/abilities/Wc3AbilityData";
 import { AbilityEvent } from "../../../systems/ability-events/event-models/AbilityEvent";
+import { IAbilityEvent } from "../../../systems/ability-events/event-models/IAbilityEvent";
 import { IAbilityEventHandler } from "../../../systems/ability-events/IAbilityEventHandler";
 import { AttackType } from "../../../systems/damage/AttackType";
 import { DamageType } from "../../../systems/damage/DamageType";
@@ -12,12 +14,16 @@ import { IHeroStatService } from "../../../systems/hero-stats/IHeroStatService";
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
 
+export interface FireBlastConfig extends Wc3AbilityData {
+    sfxModelPath: string,
+}
+
 type FireBlastUnitData = {
     Damage: number,
     Range: number,
     Cost: number,
     Cooldown: number,
-    Speed: number,
+    BonusCrit: number,
     CastableWhileMoving: boolean
 }
 
@@ -28,33 +34,47 @@ export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlas
         Range: 1000,
         Cost: 13,
         Cooldown: 4.5,
-        Speed: 1200,
+        BonusCrit: 0,
         CastableWhileMoving: false
     }));
 
+    private readonly sfxModelPath: string;
+
     constructor(
-        data: Wc3AbilityData,
+        data: FireBlastConfig,
         abilityEventHandler: IAbilityEventHandler,
         private readonly damageService: IDamageService,
         private readonly statService: IHeroStatService,
+        private readonly lastTargetService: LastTargetService,
     ) {
         super(data);
+        this.sfxModelPath = data.sfxModelPath;
         abilityEventHandler.OnAbilityEnd(this.id, e => this.Execute(e));
     }
 
-    Execute(e: AbilityEvent): void {
+    Execute(e: IAbilityEvent): void {
         Log.Info("Cast Fire blast");
 
         let caster = e.caster;
-        let target = e.targetUnit ?? caster;
-        if (!target) return;
-
+        let target = this.lastTargetService.Get(caster);
         let data = this.GetUnitConfig(caster);
-        let int = this.statService.GetStat(caster, HeroStat.Int);
 
-        this.damageService.UnitDamageTarget(caster, target, data.Damage + int, AttackType.Spell, DamageType.Fire);
+        if (!target) {
+            // Return no target error
+            return; 
+        } else if (!caster.inRangeOfUnit(target, data.Range)) {
+            // If target is in range error
+            return;
+        }
+    
+        const victim = target;
+        this.statService.DoWithModifiedStat(caster, HeroStat.CritChance, data.BonusCrit, () => {
 
-        new Timer().start(1, false, () => this.statService.UpdateStat(caster, HeroStat.Int, 1));
+            let int = this.statService.GetStat(caster, HeroStat.Int);
+            this.damageService.UnitDamageTarget(caster, victim, data.Damage + int, AttackType.Spell, DamageType.Fire);
+            new Effect(this.sfxModelPath, victim, 'chest').destroy();
+            caster.queueAnimation("spell");
+        });
     }
     
     GetUnitConfig = (unit: Unit) => this.unitConfig.GetUnitConfig(unit);

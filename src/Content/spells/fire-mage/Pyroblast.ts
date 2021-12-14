@@ -5,6 +5,7 @@ import { IDamageService } from "../../../services/damage/IDamageService";
 import { AbilityBase } from "../../../systems/abilities/AbilityBase";
 import { Wc3AbilityData } from "../../../systems/abilities/Wc3AbilityData";
 import { AbilityEvent } from "../../../systems/ability-events/event-models/AbilityEvent";
+import { IAbilityEvent } from "../../../systems/ability-events/event-models/IAbilityEvent";
 import { IAbilityEventHandler } from "../../../systems/ability-events/IAbilityEventHandler";
 import { Coords } from "../../../systems/coord/Coords";
 import { AttackType } from "../../../systems/damage/AttackType";
@@ -29,6 +30,7 @@ export interface PyroblastConfig extends Wc3AbilityData {
 export type PyroblastUnitData = {
     Damage: number
     CastTime: number,
+    NonInterruptOrderId: number | null,
 }
 
 export class Pyroblast extends AbilityBase implements IUnitConfigurable<PyroblastUnitData> {
@@ -36,6 +38,7 @@ export class Pyroblast extends AbilityBase implements IUnitConfigurable<Pyroblas
     public readonly unitConfig = new UnitConfigurable<PyroblastUnitData>(() => ({
         Damage: 20,
         CastTime: 3.0,
+        NonInterruptOrderId: null,
     }));
 
     projectile: IDelayedTargetEffect<null>;
@@ -55,7 +58,7 @@ export class Pyroblast extends AbilityBase implements IUnitConfigurable<Pyroblas
         this.projectile = dummyAbilityFactory.CreateDelayedTargetEffect<null>(dummySpell, data.dummyPyroblast.orderId);
     }
 
-    Execute(e: AbilityEvent): boolean {
+    Execute(e: IAbilityEvent): boolean {
         
         print("PYRO")
         let caster = e.caster;
@@ -65,8 +68,8 @@ export class Pyroblast extends AbilityBase implements IUnitConfigurable<Pyroblas
         let data = this.GetUnitConfig(caster);
         let int = this.statService.GetStat(caster, HeroStat.Int);
 
-        // Try queueing this spell, if yes stop here
-        if (this.castBarService.TryToQueue(caster, this.orderId, 'target', target)) return false;
+        // If we're already casting this spell, don't cast another
+        print("Casting spell", this.castBarService.GetCurrentlyCastingSpell(caster));
 
         let onLaunch = () => {
             caster.queueAnimation("spell");
@@ -82,12 +85,21 @@ export class Pyroblast extends AbilityBase implements IUnitConfigurable<Pyroblas
             return true;
         }
 
-        // If we're already casting this spell, do cast another
+        // Try queueing this spell, if yes stop here
+        if (this.castBarService.TryToQueue(caster, this.orderId, 'target', target)) return false;
         if (this.castBarService.GetCurrentlyCastingSpell(caster) == this.id) return false;
+
         // Start casting the spell
         this.castBarService.CreateCastBar(caster, this.id, data.CastTime, bar => {
             onLaunch();
-        }).OnInterrupt((bar, orderId) => orderId == this.orderId ? 'ignore' : 'destroyCastBar');
+        }).OnInterrupt((bar, orderId) => {
+
+            if (orderId == this.orderId ||
+                orderId == data.NonInterruptOrderId) return 'ignore';
+                
+            caster.issueImmediateOrder(OrderId.Stop);
+            return 'destroyCastBar';
+        });
         
         return true;
     }

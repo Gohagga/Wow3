@@ -9,10 +9,12 @@ import { FireMage } from "./content/Classes/FireMage";
 import { FireBlast } from "./content/spells/fire-mage/FireBlast";
 import { HotStreak } from "./content/spells/fire-mage/HotStreak";
 import { Pyroblast } from "./content/spells/fire-mage/Pyroblast";
+import { Scorch } from "./content/spells/fire-mage/Scorch";
 import { Level, Log } from "./Log";
 import { OrderQueueService } from "./services/ability-queue/OrderQueueService";
 import { DamageDisplayManager } from "./services/damage-display/DamageDisplayManager";
 import { DamageService } from "./services/damage/DamageService";
+import { LastTargetService } from "./services/last-target/LastTargetService";
 import { AbilityEventProvider } from "./systems/ability-events/AbilityEventProvider";
 import { AutoattackEventProvider } from "./systems/damage/AutoattackEventProvider";
 import { CritManager } from "./systems/damage/CritManager";
@@ -44,23 +46,26 @@ export function Startup() {
         const damageService = new DamageService(damageEventHandler, damageDisplayManager);
         const interruptableService = new InterruptableService();
         const orderQueueService = new OrderQueueService();
-        const castBarFactory = new CastBarService(config.castBars, interruptableService, orderQueueService);
+        const castBarService = new CastBarService(config.castBars, interruptableService, orderQueueService);
         const critManager = new CritManager(damageEventHandler, heroStatService);
+        const lastTargetService = new LastTargetService();
         
         // Wc3 Event providers
         const autoattackEventProvider = new AutoattackEventProvider(damageEventHandler, damageDisplayManager, heroStatService);
         const abilityEventProvider = new AbilityEventProvider(abilityEvent);
     
         let aFireball = new Fireball(config.fireball, dummyAbilityFactory, abilityEvent);
-        let aFireBlast = new FireBlast(config.fireBlast, abilityEvent, damageService, heroStatService);
+        let aFireBlast = new FireBlast(config.fireBlast, abilityEvent, damageService, heroStatService, lastTargetService);
         let aHotStreak = new HotStreak(config.hotStreak, damageEventHandler);
-        let aPyroblast = new Pyroblast(config.pyroblast, abilityEvent, dummyAbilityFactory, aHotStreak, damageService, heroStatService, castBarFactory);
+        let aPyroblast = new Pyroblast(config.pyroblast, abilityEvent, dummyAbilityFactory, aHotStreak, damageService, heroStatService, castBarService);
+        let aScorch = new Scorch(config.scorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService);
 
         const abilities = {
             fireball: aFireball,
             fireBlast: aFireBlast,
             hotStreak: aHotStreak,
             pyroblast: aPyroblast,
+            scorch: aScorch,
         }
     
         // Talent UI
@@ -68,7 +73,7 @@ export function Startup() {
         const treeVm = new BasicTalentTreeViewModel(config.talents.talentTreeViewModel, MapPlayer.fromIndex(0), treeUi,
             (i) => new BasicTalentViewModel(config.talents.talentViewModel, GenerateBasicTalentView(config.talents.talentView, treeUi.window, i.toString())));
 
-        const tree = new FireMage(Unit.fromHandle(gg_unit_H000_0020), skillManager, abilities);    
+        const tree = new FireMage(Unit.fromHandle(gg_unit_H000_0020), skillManager, abilities);
         treeVm.SetTree(tree);
         treeVm.Show();
         

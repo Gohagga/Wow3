@@ -1,8 +1,10 @@
 import { FireballConfig } from "content/spells/fire-mage/Fireball";
 import { DummyUnitManagerConfig } from "systems/dummies/DummyUnitManager";
 import { OrderId } from 'w3ts/globals/order'
+import { FireBlastConfig } from "../content/spells/fire-mage/FireBlast";
 import { HotStreakConfig } from "../content/spells/fire-mage/HotStreak";
 import { PyroblastConfig } from "../content/spells/fire-mage/Pyroblast";
+import { ScorchConfig } from "../content/spells/fire-mage/Scorch";
 import { Wc3AbilityData } from "../systems/abilities/Wc3AbilityData";
 import { AttackType } from "../systems/damage/AttackType";
 import { DamageType } from "../systems/damage/DamageType";
@@ -26,7 +28,7 @@ export class Config {
         [HeroStat.Int]: 1,
         [HeroStat.Agi]: 1,
         [HeroStat.Spr]: 1,
-        [HeroStat.CritChance]: 0.5,
+        [HeroStat.CritChance]: 0.25,
         [HeroStat.CritMultiplier]: 1.5,
 
         [HeroStat.AutoDamageType]: DamageType.Untyped,
@@ -51,10 +53,11 @@ export class Config {
         }
     }
 
-    fireBlast: Wc3AbilityData = {
+    fireBlast: FireBlastConfig = {
         codeId: 'A00F',
         name: 'Fire Blast',
-        orderId: OrderId.Berserk
+        orderId: OrderId.Berserk,
+        sfxModelPath: 'Models/Fire Crescent Tailed',
     }
     
     pyroblast: PyroblastConfig = {
@@ -80,6 +83,15 @@ export class Config {
         ],
         heatingUpBuffCodeId: 'B006',
         hotStreakBuffCodeId: 'B004',
+    }
+
+    scorch: ScorchConfig = {
+        codeId: 'A00W',
+        name: 'Scorch',
+        orderId: OrderId.Manashieldon,
+        sfxModel: 'Models/Airstrike Rocket.mdl',
+        removedBuffCodeId: 'BNms',
+        nonInterruptOrderId: [ OrderId.Manashieldon ],
     }
 }
 
