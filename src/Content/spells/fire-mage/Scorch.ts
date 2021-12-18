@@ -15,12 +15,13 @@ import { IDelayedTargetEffect } from "../../../systems/dummies/interfaces/IDelay
 import { IDummyAbilityFactory } from "../../../systems/dummies/interfaces/IDummyAbilityFactory";
 import { HeroStat } from "../../../systems/hero-stats/HeroStat";
 import { IHeroStatService } from "../../../systems/hero-stats/IHeroStatService";
-import { CastBarService } from "../../../systems/progress-bars/CastBarFactory";
+import { CastBarService } from "../../../systems/progress-bars/CastBarService";
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
 import { HotStreak } from "./HotStreak";
 
 export interface ScorchConfig extends Wc3AbilityData {
+    scorchFirestarterCodeId: string,
     removedBuffCodeId: string,
     sfxModel: string,
     nonInterruptOrderId: number[],
@@ -61,36 +62,31 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
         this.nonInterruptOrderId = data.nonInterruptOrderId;
         this.sfxModelPath = data.sfxModel;
 
-        abilityEventHandler.OnAbilityEnd(this.id, e => this.Execute(e));
+        abilityEventHandler.OnAbilityCast(this.id, e => this.Execute(e));
     }
 
-    Execute(e: IAbilityEvent): void {
+    Execute(e: IAbilityEvent): boolean {
         
         print("SCORCH")
         let caster = e.caster;
-        caster.removeAbility(this.removedBuffId);
+        // caster.removeAbility(this.removedBuffId);
 
-        // Try queueing this spell, if yes stop here
-        if (this.castBarService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return;
-        print("after q")
-        if (this.castBarService.GetCurrentlyCastingSpell(caster) == this.id) return;
-        print("Cast")
+        // // Try queueing this spell, if yes stop here
+        if (this.castBarService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return false;
+        // print("after q")
+        if (this.castBarService.GetCurrentlyCastingSpell(caster) == this.id) return false;
+        // print("Cast")
 
         let data = this.GetUnitConfig(caster);
 
         let target = this.lastTargetService.Get(caster);
-        if (!target) return;
+        if (!target) return false;
 
-        const currentOrder = GetIssuedOrderId();
-        if (data.Firestarter == false)
-            caster.issueImmediateOrder(OrderId.Stop);
-        else if (currentOrder != 0 && currentOrder != OrderId.Move && currentOrder != OrderId.Smart)
-            caster.issueImmediateOrder(OrderId.Stop);
-
+        // const currentOrder = GetIssuedOrderId();
+        
         if (caster.inRangeOfUnit(target, data.Range)) {
 
             let victim = target;
-            caster.setAnimation('spell channel');
             SetUnitFacing(caster.handle, Atan2(caster.y-target.y, caster.x-target.x));
             this.castBarService.CreateCastBar(caster, this.id, data.CastTime, bar => {
                 
@@ -106,17 +102,14 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
 
                 if (orderId == this.orderId ||
                     orderId == data.NonInterruptOrderId) return 'ignore';
-
-                if (data.Firestarter && (orderId == OrderId.Move || orderId == OrderId.Smart))
-                    return 'ignore';
                 
-                if (!data.Firestarter) caster.issueImmediateOrder(OrderId.Stop);
+                caster.issueImmediateOrder(OrderId.Stop);
 
                 return 'destroyCastBar';
             });
-            
-            caster.queueAnimation("spell channel");
         }
+
+        return true;
     }
 
     GetUnitConfig = (unit: Unit) => this.unitConfig.GetUnitConfig(unit);

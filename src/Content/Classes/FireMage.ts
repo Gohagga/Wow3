@@ -9,6 +9,7 @@ import { FireBlast } from "../spells/fire-mage/FireBlast";
 import { HotStreak } from "../spells/fire-mage/HotStreak";
 import { Pyroblast } from "../spells/fire-mage/Pyroblast";
 import { Scorch } from "../spells/fire-mage/Scorch";
+import { ScorchFirestarter } from "../spells/fire-mage/ScorchFirestarter";
 
 export class FireMage extends TalentTree {
 
@@ -28,25 +29,11 @@ export class FireMage extends TalentTree {
             pyroblast: Pyroblast,
             hotStreak: HotStreak,
             scorch: Scorch,
+            scorchFirestarter: ScorchFirestarter,
     }) {
         super(unit);
         this.Initialize(new TalentTreeBuilder(this));
     }
-
-    // // Overriden stub methods ==================================================
-    // GetTalentPoints(nothing returns integer
-    //     return GetPlayerState(this.ownerPlayer, PLAYER_STATE_RESOURCE_LUMBER)
-    // }
-
-    // SetTalentPoints(integer points {
-    //     SetPlayerState(this.ownerPlayer, PLAYER_STATE_RESOURCE_LUMBER, points)
-    //     // STK_UpdateTalentViews(this.ownerPlayer)
-    // }
-
-    // GetTitle(nothing returns string
-    //     return this.title
-    // }
-    // =========================================================================
 
     public Initialize(builder: ITalentTreeBuilder): void {
 
@@ -100,7 +87,11 @@ export class FireMage extends TalentTree {
             Description: "Scorch is castable while moving and attacking.",
             Icon: 'spell_fire_playingwithfire',
             Dependency: { right: 3 },
-            OnActivate: (e) => this.abilities.scorch.UpdateUnitConfig(this.unit, cb => cb.Firestarter = true),
+            OnActivate: (e) => {
+                this.skillManager.UnitRemoveSkill(this.unit, this.abilities.scorch);
+                this.skillManager.UnitAddSkill(this.unit, this.abilities.scorchFirestarter);
+                this.abilities.scorchFirestarter.UpdateUnitConfig(this.unit, cb => cb.Firestarter = true);
+            }
         });
 
         // Improved Scorch

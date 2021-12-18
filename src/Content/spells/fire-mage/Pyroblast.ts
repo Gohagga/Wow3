@@ -15,7 +15,7 @@ import { IDummyAbilityFactory } from "../../../systems/dummies/interfaces/IDummy
 import { HeroStat } from "../../../systems/hero-stats/HeroStat";
 import { IHeroStatService } from "../../../systems/hero-stats/IHeroStatService";
 import { CastBar } from "../../../systems/progress-bars/CastBar";
-import { CastBarService } from "../../../systems/progress-bars/CastBarFactory";
+import { CastBarService } from "../../../systems/progress-bars/CastBarService";
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
 import { HotStreak } from "./HotStreak";

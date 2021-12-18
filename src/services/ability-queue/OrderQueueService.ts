@@ -17,6 +17,14 @@ export class OrderQueueService {
         
     }
 
+    IsOrderQueued(unit: Unit, orderId: number): boolean {
+        const unitId = unit.id;
+        if (unitId in this.unitQueue && this.unitQueue[unitId].length > 0)
+            return this.unitQueue[unitId][0].id == orderId;
+
+        return false;
+    }
+
     QueueOrder(unit: Unit, order: QueuedOrder, override: boolean) {
 
         const unitId = unit.id;

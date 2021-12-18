@@ -9,7 +9,7 @@ import { Wc3AbilityData } from "../systems/abilities/Wc3AbilityData";
 import { AttackType } from "../systems/damage/AttackType";
 import { DamageType } from "../systems/damage/DamageType";
 import { HeroStat } from "../systems/hero-stats/HeroStat";
-import { CastBarServiceConfig } from "../systems/progress-bars/CastBarFactory";
+import { CastBarServiceConfig } from "../systems/progress-bars/CastBarService";
 import { TalentsConfig } from "./TalentConfig";
 
 export class Config {
@@ -86,7 +86,8 @@ export class Config {
     }
 
     scorch: ScorchConfig = {
-        codeId: 'A00W',
+        codeId: 'A00V',
+        scorchFirestarterCodeId: 'A00W',
         name: 'Scorch',
         orderId: OrderId.Manashieldon,
         sfxModel: 'Models/Airstrike Rocket.mdl',

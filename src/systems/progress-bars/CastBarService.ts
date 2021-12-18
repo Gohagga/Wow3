@@ -122,6 +122,9 @@ export class CastBarService {
     public OnInterrupt(castBar: CastBar, caster: Unit, action: (castBar: CastBar, orderId: number) => 'finishCastBar' | 'destroyCastBar' | 'ignore') {
         this.interruptableService.Register(caster.handle, orderId => {
             
+            // If this order is the queued one, do not cancel the cast
+            if (this.orderQueueService.IsOrderQueued(caster, orderId)) return true;
+
             let casterId = caster.id;
             let retVal = false;
             this.interruptableService.WithinLock(() => {
