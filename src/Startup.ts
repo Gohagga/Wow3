@@ -10,6 +10,7 @@ import { FireBlast } from "./content/spells/fire-mage/FireBlast";
 import { HotStreak } from "./content/spells/fire-mage/HotStreak";
 import { Pyroblast } from "./content/spells/fire-mage/Pyroblast";
 import { Scorch } from "./content/spells/fire-mage/Scorch";
+import { ScorchFirestarter } from "./content/spells/fire-mage/ScorchFirestarter";
 import { Level, Log } from "./Log";
 import { OrderQueueService } from "./services/ability-queue/OrderQueueService";
 import { DamageDisplayManager } from "./services/damage-display/DamageDisplayManager";
@@ -20,7 +21,7 @@ import { AutoattackEventProvider } from "./systems/damage/AutoattackEventProvide
 import { CritManager } from "./systems/damage/CritManager";
 import { HeroStatService } from "./systems/hero-stats/HeroStatService";
 import { InterruptableService } from "./systems/interruptable/InterruptableService";
-import { CastBarService } from "./systems/progress-bars/CastBarFactory";
+import { CastBarService } from "./systems/progress-bars/CastBarService";
 import { SkillManager } from "./systems/skill-manager/SkillManager";
 import { BasicTalentTreeViewModel } from "./systems/talents/ViewModels/BasicTalentTreeViewModel";
 import { BasicTalentViewModel } from "./systems/talents/ViewModels/BasicTalentViewModel";
@@ -59,6 +60,7 @@ export function Startup() {
         let aHotStreak = new HotStreak(config.hotStreak, damageEventHandler);
         let aPyroblast = new Pyroblast(config.pyroblast, abilityEvent, dummyAbilityFactory, aHotStreak, damageService, heroStatService, castBarService);
         let aScorch = new Scorch(config.scorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService);
+        let aScorchFirestarter = new ScorchFirestarter(config.scorch, aScorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService);
 
         const abilities = {
             fireball: aFireball,
@@ -66,6 +68,7 @@ export function Startup() {
             hotStreak: aHotStreak,
             pyroblast: aPyroblast,
             scorch: aScorch,
+            scorchFirestarter: aScorchFirestarter
         }
     
         // Talent UI
