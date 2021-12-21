@@ -47,7 +47,7 @@ export class HotStreak extends AbilityBase {
         damageEventHandler.Subscribe(ActionOrder.HotStreak, (e, sub) => {
 
             print("Damage event~", e.isCrit, e.attackType);
-            if (e.source.getAbilityLevel(this.id) > 0 && e.isCrit && e.attackType == AttackType.Autoattack || e.attackType == AttackType.Spell) {
+            if ((e.source.getAbilityLevel(this.id) > 0) && e.isCrit && (e.attackType == AttackType.Autoattack || e.attackType == AttackType.Spell)) {
                 print("HotStreak");
                 this.AddStack(e.source);
             }

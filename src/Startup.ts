@@ -61,7 +61,7 @@ export function Startup() {
         const spellcastingService = new SpellcastingService(config.castBars, interruptableService, orderQueueService);
     
         let aFireball = new Fireball(config.fireball, dummyAbilityFactory, abilityEvent, spellcastingService);
-        let aFireBlast = new FireBlast(config.fireBlast, abilityEvent, damageService, heroStatService, lastTargetService);
+        let aFireBlast = new FireBlast(config.fireBlast, abilityEvent, damageService, heroStatService, lastTargetService, spellcastingService);
         let aHotStreak = new HotStreak(config.hotStreak, damageEventHandler);
         let aPyroblast = new Pyroblast(config.pyroblast, abilityEvent, dummyAbilityFactory, aHotStreak, damageService, heroStatService, castBarService, spellcastingService);
         let aScorch = new Scorch(config.scorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService, spellcastingService);
@@ -81,7 +81,7 @@ export function Startup() {
         const treeVm = new BasicTalentTreeViewModel(config.talents.talentTreeViewModel, MapPlayer.fromIndex(0), treeUi,
             (i) => new BasicTalentViewModel(config.talents.talentViewModel, GenerateBasicTalentView(config.talents.talentView, treeUi.window, i.toString())));
 
-        const tree = new FireMage(Unit.fromHandle(gg_unit_H000_0020), skillManager, abilities);
+        const tree = new FireMage(Unit.fromHandle(gg_unit_H000_0020), skillManager, heroStatService, abilities);
         treeVm.SetTree(tree);
         treeVm.Show();
         

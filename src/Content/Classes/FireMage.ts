@@ -1,4 +1,6 @@
 import { Unit } from "w3ts";
+import { HeroStat } from "../../systems/hero-stats/HeroStat";
+import { IHeroStatService } from "../../systems/hero-stats/IHeroStatService";
 import { ISkillManager } from "../../systems/skill-manager/ISkillManager";
 import { ITalentTreeBuilder } from "../../systems/talents/Interfaces/ITalentTreeBuilder";
 import { ActivationEvent } from "../../systems/talents/Models/Talent";
@@ -23,6 +25,7 @@ export class FireMage extends TalentTree {
     constructor(
         unit: Unit,
         private readonly skillManager: ISkillManager,
+        private readonly heroStatService: IHeroStatService,
         private readonly abilities: {
             fireball: Fireball,
             fireBlast: FireBlast,
@@ -104,7 +107,8 @@ export class FireMage extends TalentTree {
                 Name: "Improved Scorch",
                 Description:  `Your Scorch has ${lvl*10}% increased chance to critically strike.`,
                 Icon:  'SoulBurn',
-                Dependency: { down: 1 }
+                Dependency: { down: 1 },
+                OnActivate: (e) => this.abilities.scorch.UpdateUnitConfig(this.unit, cb => cb.CritBonus = lvl * 0.1),
             }
         });
 
@@ -142,7 +146,8 @@ export class FireMage extends TalentTree {
                 Name: "Impact",
                 Description:  `Your Fire Blast has ${lvl*25}% increased chance to critically strike.`,
                 Icon:  'WallOfFire',
-                Dependency: { "down": 1 }
+                Dependency: { "down": 1 },
+                OnActivate: (e) => this.abilities.fireBlast.UpdateUnitConfig(this.unit, cb => cb.BonusCrit = lvl * 0.25)
             };
         });
 
@@ -172,6 +177,7 @@ export class FireMage extends TalentTree {
                 Name: "Critical Mass",
                 Description:  `Your spells have ${lvl*5}% increased chance to critically strike.`,
                 Icon:  'ability_mage_firestarter',
+                OnActivate: (e) => this.heroStatService.UpdateStat(this.unit, HeroStat.CritChance, 0.05),
             }
         });
 

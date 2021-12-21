@@ -11,6 +11,7 @@ import { AttackType } from "../../../systems/damage/AttackType";
 import { DamageType } from "../../../systems/damage/DamageType";
 import { HeroStat } from "../../../systems/hero-stats/HeroStat";
 import { IHeroStatService } from "../../../systems/hero-stats/IHeroStatService";
+import { SpellcastingService } from "../../../systems/progress-bars/SpellcastingService";
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
 
@@ -46,6 +47,7 @@ export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlas
         private readonly damageService: IDamageService,
         private readonly statService: IHeroStatService,
         private readonly lastTargetService: LastTargetService,
+        private readonly spellcastingService: SpellcastingService
     ) {
         super(data);
         this.sfxModelPath = data.sfxModelPath;
@@ -66,6 +68,9 @@ export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlas
             // If target is in range error
             return;
         }
+
+        if (data.CastableWhileMoving == false && this.spellcastingService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e)))
+            return;
     
         const victim = target;
         this.statService.DoWithModifiedStat(caster, HeroStat.CritChance, data.BonusCrit, () => {

@@ -86,7 +86,10 @@ export class ScorchFirestarter extends AbilityBase implements IUnitConfigurable<
                 tim.start(0.3, false, () => {
 
                     let int = this.statService.GetStat(caster, HeroStat.Int);
-                    this.damageService.UnitDamageTarget(caster, victim, int + data.Damage, AttackType.Spell, DamageType.Fire);
+
+                    this.statService.DoWithModifiedStat(caster, HeroStat.CritChance, data.CritBonus, () => 
+                        this.damageService.UnitDamageTarget(caster, victim, int + data.Damage, AttackType.Spell, DamageType.Fire));
+                        
                     new Effect(this.sfxModelPath, victim, 'chest').destroy();
                     tim.destroy();
                 });

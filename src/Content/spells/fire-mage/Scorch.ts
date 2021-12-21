@@ -35,6 +35,7 @@ export type ScorchUnitData = {
     CastTime: number,
     Firestarter: boolean,
     Range: number,
+    CritBonus: number,
     NonInterruptOrderId: number | null,
 }
 
@@ -45,6 +46,7 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
         CastTime: 2.0,
         Range: 1000,
         Firestarter: false,
+        CritBonus: 0.0,
         NonInterruptOrderId: null,
     }));
 
@@ -73,22 +75,14 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
         
         print("SCORCH")
         let caster = e.caster;
-        // caster.removeAbility(this.removedBuffId);
-
-        // // Try queueing this spell, if yes stop here
+        
         if (this.spellcastingService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return false;
-        // if (this.castBarService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return false;
-        // print("after q")
-        // if (this.castBarService.GetCurrentlyCastingSpell(caster) == this.id) return false;
-        // print("Cast")
 
         let data = this.GetUnitConfig(caster);
 
         let target = this.lastTargetService.Get(caster);
         if (!target) return false;
 
-        // const currentOrder = GetIssuedOrderId();
-        
         if (caster.inRangeOfUnit(target, data.Range)) {
 
             let victim = target;
@@ -99,7 +93,9 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
                 tim.start(0.3, false, () => {
 
                     let int = this.statService.GetStat(caster, HeroStat.Int);
-                    this.damageService.UnitDamageTarget(caster, victim, int + data.Damage, AttackType.Spell, DamageType.Fire);
+                    this.statService.DoWithModifiedStat(caster, HeroStat.CritChance, data.CritBonus, () => 
+                        this.damageService.UnitDamageTarget(caster, victim, int + data.Damage, AttackType.Spell, DamageType.Fire));
+
                     new Effect(this.sfxModelPath, victim, 'chest').destroy();
                     tim.destroy();
                 });

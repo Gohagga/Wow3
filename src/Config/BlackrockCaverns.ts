@@ -28,7 +28,7 @@ export class Config {
         [HeroStat.Int]: 1,
         [HeroStat.Agi]: 1,
         [HeroStat.Spr]: 1,
-        [HeroStat.CritChance]: 0.25,
+        [HeroStat.CritChance]: 0.05,
         [HeroStat.CritMultiplier]: 1.5,
 
         [HeroStat.AutoDamageType]: DamageType.Untyped,
