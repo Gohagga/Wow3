@@ -22,6 +22,9 @@ import { CritManager } from "./systems/damage/CritManager";
 import { HeroStatService } from "./systems/hero-stats/HeroStatService";
 import { InterruptableService } from "./systems/interruptable/InterruptableService";
 import { CastBarService } from "./systems/progress-bars/CastBarService";
+import { CastBarService2 } from "./systems/progress-bars/CastBarService2";
+import { CastBarService3 } from "./systems/progress-bars/CastBarService3";
+import { SpellcastingService } from "./systems/progress-bars/SpellcastingService";
 import { SkillManager } from "./systems/skill-manager/SkillManager";
 import { BasicTalentTreeViewModel } from "./systems/talents/ViewModels/BasicTalentTreeViewModel";
 import { BasicTalentViewModel } from "./systems/talents/ViewModels/BasicTalentViewModel";
@@ -47,20 +50,22 @@ export function Startup() {
         const damageService = new DamageService(damageEventHandler, damageDisplayManager);
         const interruptableService = new InterruptableService();
         const orderQueueService = new OrderQueueService();
-        const castBarService = new CastBarService(config.castBars, interruptableService, orderQueueService);
+        const castBarService = new CastBarService3(config.castBars, interruptableService, orderQueueService);
         const critManager = new CritManager(damageEventHandler, heroStatService);
         const lastTargetService = new LastTargetService();
         
         // Wc3 Event providers
         const autoattackEventProvider = new AutoattackEventProvider(damageEventHandler, damageDisplayManager, heroStatService);
-        const abilityEventProvider = new AbilityEventProvider(abilityEvent);
+        const abilityEventProvider = new AbilityEventProvider(abilityEvent, interruptableService);
+
+        const spellcastingService = new SpellcastingService(config.castBars, interruptableService, orderQueueService);
     
-        let aFireball = new Fireball(config.fireball, dummyAbilityFactory, abilityEvent);
+        let aFireball = new Fireball(config.fireball, dummyAbilityFactory, abilityEvent, spellcastingService);
         let aFireBlast = new FireBlast(config.fireBlast, abilityEvent, damageService, heroStatService, lastTargetService);
         let aHotStreak = new HotStreak(config.hotStreak, damageEventHandler);
-        let aPyroblast = new Pyroblast(config.pyroblast, abilityEvent, dummyAbilityFactory, aHotStreak, damageService, heroStatService, castBarService);
-        let aScorch = new Scorch(config.scorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService);
-        let aScorchFirestarter = new ScorchFirestarter(config.scorch, aScorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService);
+        let aPyroblast = new Pyroblast(config.pyroblast, abilityEvent, dummyAbilityFactory, aHotStreak, damageService, heroStatService, castBarService, spellcastingService);
+        let aScorch = new Scorch(config.scorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService, spellcastingService);
+        let aScorchFirestarter = new ScorchFirestarter(config.scorch, aScorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService, spellcastingService);
 
         const abilities = {
             fireball: aFireball,

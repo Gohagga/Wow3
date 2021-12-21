@@ -15,7 +15,10 @@ import { IDelayedTargetEffect } from "../../../systems/dummies/interfaces/IDelay
 import { IDummyAbilityFactory } from "../../../systems/dummies/interfaces/IDummyAbilityFactory";
 import { HeroStat } from "../../../systems/hero-stats/HeroStat";
 import { IHeroStatService } from "../../../systems/hero-stats/IHeroStatService";
+import { CastBar } from "../../../systems/progress-bars/CastBar";
 import { CastBarService } from "../../../systems/progress-bars/CastBarService";
+import { ICastBarService } from "../../../systems/progress-bars/ICastBarService";
+import { SpellcastingService } from "../../../systems/progress-bars/SpellcastingService";
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
 import { HotStreak } from "./HotStreak";
@@ -54,8 +57,9 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
         abilityEventHandler: IAbilityEventHandler,
         private readonly damageService: IDamageService,
         private readonly statService: IHeroStatService,
-        private readonly castBarService: CastBarService,
+        private readonly castBarService: ICastBarService,
         private readonly lastTargetService: LastTargetService,
+        private readonly spellcastingService: SpellcastingService,
     ) {
         super(data);
         this.removedBuffId = FourCC(data.removedBuffCodeId);
@@ -72,9 +76,10 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
         // caster.removeAbility(this.removedBuffId);
 
         // // Try queueing this spell, if yes stop here
-        if (this.castBarService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return false;
+        if (this.spellcastingService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return false;
+        // if (this.castBarService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return false;
         // print("after q")
-        if (this.castBarService.GetCurrentlyCastingSpell(caster) == this.id) return false;
+        // if (this.castBarService.GetCurrentlyCastingSpell(caster) == this.id) return false;
         // print("Cast")
 
         let data = this.GetUnitConfig(caster);
@@ -88,7 +93,7 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
 
             let victim = target;
             SetUnitFacing(caster.handle, Atan2(caster.y-target.y, caster.x-target.x));
-            this.castBarService.CreateCastBar(caster, this.id, data.CastTime, bar => {
+            this.spellcastingService.CastSpell(caster, this.id, data.CastTime, bar => {
                 
                 let tim = new Timer();
                 tim.start(0.3, false, () => {
@@ -98,14 +103,15 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
                     new Effect(this.sfxModelPath, victim, 'chest').destroy();
                     tim.destroy();
                 });
-            }).OnInterrupt((bar, orderId) => {
+            }, (orderId: number, castBar: CastBar) => {
 
-                if (orderId == this.orderId ||
-                    orderId == data.NonInterruptOrderId) return 'ignore';
+                if (orderId != data.NonInterruptOrderId)
+                    castBar.alive = false;
+
+                if (castBar.isDone)
+                    return false;
                 
-                caster.issueImmediateOrder(OrderId.Stop);
-
-                return 'destroyCastBar';
+                return true;
             });
         }
 

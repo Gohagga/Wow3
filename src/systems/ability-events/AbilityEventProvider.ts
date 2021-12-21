@@ -1,4 +1,5 @@
 import { Trigger } from "w3ts/index";
+import { InterruptableService } from "../interruptable/InterruptableService";
 import { AbilityEventType } from "./AbilityEventType";
 import { IAbilityEventHandler } from "./IAbilityEventHandler";
 
@@ -10,11 +11,13 @@ export class AbilityEventProvider {
     spellFinishTrigger: Trigger;
 
     constructor(
-        private abilityEventHandler: IAbilityEventHandler
+        private readonly abilityEventHandler: IAbilityEventHandler,
+        private readonly interruptableService: InterruptableService,
     ) {
         this.spellCastTrigger = new Trigger();
         this.spellCastTrigger.registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_CAST);
         this.spellCastTrigger.addAction(() => {
+            this.interruptableService.Fire(GetTriggerUnit(), GetSpellAbilityId());
             this.abilityEventHandler.Raise(AbilityEventType.Cast, GetSpellAbilityId());
         });
         this.spellEffectTrigger = new Trigger();

@@ -1,5 +1,4 @@
 import { Point, Unit, Widget } from "w3ts"
-import { OrderId } from "w3ts/globals/order";
 import { Log } from "../../Log";
 import { OrderQueueService, QueuedOrder } from "../../services/ability-queue/OrderQueueService";
 import { IAbilityEvent } from "../ability-events/event-models/IAbilityEvent";
@@ -15,7 +14,7 @@ export interface CastBarServiceConfig {
     queueTreshold: number;
 }
 
-export class CastBarService implements ICastBarService {
+export class CastBarService3 implements ICastBarService {
     
     private readonly castBars: Record<number, CastBar> = {};
 
@@ -37,39 +36,43 @@ export class CastBarService implements ICastBarService {
         this.queueTreshold = config.queueTreshold;
     }
 
-    GetCurrentlyCastingSpell(caster: Unit) {
+    GetCurrentlyCastingSpell(caster: Unit): number {
         const casterId = caster.id;
         print("exists?", casterId in this.castBars);
         if (casterId in this.castBars && this.castBars[casterId]) {
             print("exists", this.castBars[casterId].spellId);
+            if (!this.castBars[casterId].alive) return -1;
+
             return this.castBars[casterId].spellId;
         }
         return -1;
     }
 
     TryToQueue(caster: Unit, orderId: number, type: 'target' | 'point' | 'immediate', targetWidget?: Widget, targetPoint?: Point): boolean {
-        
         let casterId = caster.id;
 
-        if (casterId in this.castBars) print("in cast bars")
-        if (this.castBars[casterId]) print("cast bar exists")
-        if (casterId in this.castBars && this.castBars[casterId] && this.castBars[casterId].RemainingTime() < this.queueTreshold) {
-            print("Queueing spell...")
-            let order: QueuedOrder = {
-                id: orderId,
-                type,
-                targetPoint,
-                targetWidget
-            };
-            this.orderQueueService.QueueOrder(caster, order, true);
-            return true;
+        if (casterId in this.castBars && this.castBars[casterId]) {
+            print("cast bar exists")
+            let castBar = this.castBars[casterId];
+            print("alive?", castBar.alive);
+            if (!castBar.isDone && castBar.RemainingTime() < this.queueTreshold && castBar) {
+                castBar.alive = true;
+                print("Queueing spell...")
+                let order: QueuedOrder = {
+                    id: orderId,
+                    type,
+                    targetPoint,
+                    targetWidget
+                };
+                this.orderQueueService.QueueOrder(caster, order, true);
+                return true;
+            }
         }
 
         return false;
     }
 
     TryToQueueAbility(caster: Unit, orderId: number, e: IAbilityEvent, abilityEffect: (e: IAbilityEvent) => void): boolean {
-        
         try {
             let casterId = caster.id;
     
@@ -81,15 +84,19 @@ export class CastBarService implements ICastBarService {
                 summonedUnit: e.summonedUnit,
                 targetDestructable: e.targetDestructable
             };
-            if (casterId in this.castBars && this.castBars[casterId] && this.castBars[casterId].RemainingTime() < this.queueTreshold) {
-                print("Queueing spell...")
-                let order: QueuedOrder = {
-                    id: orderId,
-                    type: 'effect',
-                    effect: () => abilityEffect(eData),
-                };
-                this.orderQueueService.QueueOrder(caster, order, true);
-                return true;
+            if (casterId in this.castBars && this.castBars[casterId]) {
+                let castBar = this.castBars[casterId];
+                print("alive?", castBar.alive);
+                if (castBar.alive && castBar.RemainingTime() < this.queueTreshold) {
+                    print("Queueing spell...")
+                    let order: QueuedOrder = {
+                        id: orderId,
+                        type: 'effect',
+                        effect: () => abilityEffect(eData),
+                    };
+                    this.orderQueueService.QueueOrder(caster, order, true);
+                    return true;
+                }
             }
         } catch (ex: any) {
             Log.Error(ex);
@@ -104,7 +111,7 @@ export class CastBarService implements ICastBarService {
         this.castBars[unitId] = castBar;
         castBar.CastSpell(spellId, castTime, bar => {
             bar.Finish();
-            if (this.castBars[unitId] == castBar) delete this.castBars[unitId];
+            // if (this.castBars[unitId] == castBar) delete this.castBars[unitId];
             afterFinish(bar);
             if (this.orderQueueService.ResolveQueuedOrder(unit)) {
                 return;
@@ -112,49 +119,22 @@ export class CastBarService implements ICastBarService {
         });
 
         return castBar;
-        // return {
-        //     OnInterrupt: (action: (castBar: CastBar, orderId: number) => 'finishCastBar' | 'destroyCastBar' | 'ignore') => this.OnInterrupt(castBar, unit, action)
-        // }
     }
 
-    /**
-     * 
-     * @param action return false to interrupt the cast
-     */
     public OnInterrupt(castBar: CastBar, caster: Unit, action: (castBar: CastBar, orderId: number) => 'finishCastBar' | 'destroyCastBar' | 'ignore') {
-        this.interruptableService.Register(caster.handle, orderId => {
-            
-            // If this order is the queued one, do not cancel the cast
-            if (this.orderQueueService.IsOrderQueued(caster, orderId)) return true;
+        this.interruptableService.Register(caster.handle, (orderId) => {
 
-            let casterId = caster.id;
-            let retVal = false;
-            this.interruptableService.WithinLock(() => {
-
-                let result = action(castBar, orderId);
-                print("interrupt action", result)
-                if (result == 'ignore') retVal = true;
-                if (result == 'finishCastBar') castBar.Finish();
-                if (result == 'destroyCastBar') castBar.Destroy();
-                
-                if (!retVal && this.castBars[casterId] == castBar) {
-                    print("Destroying cast bar");
-                    delete this.castBars[casterId];
-                }
-            });
-
-            return retVal;
+            let result = action(castBar, orderId);
+            switch (result) {
+                case "ignore":
+                    return true;
+                case "finishCastBar":
+                    castBar.Finish();
+                    return false;
+                case "destroyCastBar":
+                    castBar.alive = false;
+                    return false;
+            }
         });
     }
 }
-
-// event   castbar
-// spell   -
-// cast    cast
-
-// order   ignore
-// spell   +
-// queue   +
-// -
-
-

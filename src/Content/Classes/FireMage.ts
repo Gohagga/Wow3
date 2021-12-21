@@ -78,7 +78,10 @@ export class FireMage extends TalentTree {
             Name: "Pyroblast",
             Description: "Hurls an immense fiery boulder that causes high Fire damage.|n|n|cffffd9b3Cast time: 4 sec.",
             Icon: 'Spell_Fire_Fireball02',
-            OnActivate: (e) => this.skillManager.UnitAddSkill(this.unit, this.abilities.pyroblast),
+            OnActivate: (e) => {
+                this.skillManager.UnitAddSkill(this.unit, this.abilities.pyroblast)
+                // this.abilities.fireball.AddToUnit(this.unit);
+            }
         });
 
         // Firestarter
@@ -150,8 +153,8 @@ export class FireMage extends TalentTree {
             Icon: 'IncinerateWoW',
             Dependency: { left: 1 },
             OnActivate: (e) => {
-                this.abilities.pyroblast.UpdateUnitConfig(this.unit, cb => cb.NonInterruptOrderId = this.abilities.fireBlast.orderId);
-                this.abilities.scorch.UpdateUnitConfig(this.unit, cb => cb.NonInterruptOrderId = this.abilities.fireBlast.orderId);
+                this.abilities.pyroblast.UpdateUnitConfig(this.unit, cb => cb.NonInterruptOrderId = this.abilities.fireBlast.id);
+                this.abilities.scorch.UpdateUnitConfig(this.unit, cb => cb.NonInterruptOrderId = this.abilities.fireBlast.id);
             },
         });
 

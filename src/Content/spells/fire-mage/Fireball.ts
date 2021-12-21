@@ -8,6 +8,7 @@ import { IAbilityEventHandler } from "../../../systems/ability-events/IAbilityEv
 import { Coords } from "../../../systems/coord/Coords";
 import { IDelayedTargetEffect } from "../../../systems/dummies/interfaces/IDelayedTargetEffect";
 import { IDummyAbilityFactory } from "../../../systems/dummies/interfaces/IDummyAbilityFactory";
+import { SpellcastingService } from "../../../systems/progress-bars/SpellcastingService";
 
 export interface FireballConfig extends Wc3AbilityData {
     dummyFireball: {
@@ -22,8 +23,9 @@ type FireballContext = {
 }
 
 export class Fireball extends AbilityBase {
+
     UpdateUnitSkill(unit: Unit): void {
-        throw new Error("Method not implemented.");
+        // throw new Error("Method not implemented.");
     }
     
     private readonly projectile: IDelayedTargetEffect<FireballContext>;
@@ -32,9 +34,10 @@ export class Fireball extends AbilityBase {
         config: FireballConfig,
         dummyAbilityFactory: IDummyAbilityFactory,
         private readonly abilityEvent: IAbilityEventHandler,
+        private readonly spellcastingService: SpellcastingService
     ) {
         super(config);
-        abilityEvent.OnAbilityEffect(this.id, (e) => this.Execute(e));
+        abilityEvent.OnAbilityCast(this.id, (e) => this.Execute(e));
 
         this.projectile = dummyAbilityFactory.CreateDelayedTargetEffect<FireballContext>(FourCC(config.dummyFireball.spellCodeId), config.dummyFireball.orderId);
     }
@@ -45,12 +48,18 @@ export class Fireball extends AbilityBase {
         let target = e.targetUnit;
         if (!target) return false;
 
+        if (this.spellcastingService.TryQueueOrder(caster, this.orderId, 'target', target)) return false;
+
         let context: FireballContext = { caster, target };
-        this.projectile.Cast(Coords.fromUnit(caster), target, 1, context, (context) => this.OnHit(context));
+        let cb = this.spellcastingService.CastSpell(caster, this.id, 2.5, () => {
+
+            this.projectile.Cast(Coords.fromUnit(caster), context.target, 1, context, (context) => this.OnHit(context));
+        });
+
         return true;
     }
 
     OnHit({ caster, target }: FireballContext): void {
-        Log.Info("Fireball hit, cast by", caster.name, "at", target.name);
+        // Log.Info("Fireball hit, cast by", caster.name, "at", target.name);
     }
 }

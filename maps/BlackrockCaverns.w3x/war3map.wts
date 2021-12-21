@@ -919,7 +919,7 @@ Fireball
 }
 
 STRING 161
-// Abilities: A00G (Fireball), Hotkey (Hotkey - Normal)
+// Abilities: A00J (Incinerate), Hotkey (Hotkey - Normal)
 {
 W
 }
@@ -1015,7 +1015,7 @@ Immolate
 }
 
 STRING 177
-// Abilities: A00I (Immolate), Hotkey (Hotkey - Normal)
+// Abilities: A00G (Fireball), Hotkey (Hotkey - Normal)
 {
 Q
 }
@@ -1063,7 +1063,7 @@ Incinerate
 }
 
 STRING 185
-// Abilities: A00J (Incinerate), Hotkey (Hotkey - Normal)
+// Abilities: A00N (Word of Glory), Hotkey (Hotkey - Normal)
 {
 W
 }
@@ -1165,7 +1165,7 @@ Crusader Strike
 }
 
 STRING 202
-// Abilities: A00M (Crusader Strike), Hotkey (Hotkey - Normal)
+// Abilities: A00I (Immolate), Hotkey (Hotkey - Normal)
 {
 Q
 }
@@ -1213,7 +1213,7 @@ Word of Glory
 }
 
 STRING 210
-// Abilities: A00N (Word of Glory), Hotkey (Hotkey - Normal)
+// Abilities: A00X (Pyroblast), Hotkey (Hotkey - Normal)
 {
 W
 }
@@ -1399,7 +1399,7 @@ Scorch
 }
 
 STRING 241
-// Abilities: A00V (Scorch), Hotkey (Hotkey - Normal)
+// Abilities: A00M (Crusader Strike), Hotkey (Hotkey - Normal)
 {
 Q
 }
@@ -1417,13 +1417,13 @@ STRING 243
 }
 
 STRING 244
-// Abilities: A00W (Scorch), Unhotkey (Hotkey - Turn Off)
+// Abilities: A00V (Scorch), Hotkey (Hotkey - Normal)
 {
 Q
 }
 
 STRING 245
-// Abilities: A00W (Scorch), Hotkey (Hotkey - Normal)
+// Abilities: A00W (Scorch), Unhotkey (Hotkey - Turn Off)
 {
 Q
 }
@@ -1480,12 +1480,6 @@ STRING 254
 // Abilities: A00X (Pyroblast), Name (Name)
 {
 Pyroblast
-}
-
-STRING 255
-// Abilities: A00X (Pyroblast), Hotkey (Hotkey - Normal)
-{
-W
 }
 
 STRING 256
@@ -1677,5 +1671,11 @@ One with the Earthmother, a druid healer with lots of healing over time and aoe 
 STRING 288
 {
 Azeroth
+}
+
+STRING 289
+// Abilities: A00W (Scorch), Hotkey (Hotkey - Normal)
+{
+Q
 }
 

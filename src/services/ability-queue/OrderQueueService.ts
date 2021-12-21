@@ -1,4 +1,5 @@
 import { Point, Unit, Widget } from "w3ts";
+import { OrderId } from "w3ts/globals/order";
 import { IAbilityEvent } from "../../systems/ability-events/event-models/IAbilityEvent";
 
 export interface QueuedOrder {
@@ -19,9 +20,13 @@ export class OrderQueueService {
 
     IsOrderQueued(unit: Unit, orderId: number): boolean {
         const unitId = unit.id;
-        if (unitId in this.unitQueue && this.unitQueue[unitId].length > 0)
-            return this.unitQueue[unitId][0].id == orderId;
+        if (unitId in this.unitQueue) {
 
+            print("Queue size", this.unitQueue[unitId].length);
+
+            if (this.unitQueue[unitId].length > 0)
+            return this.unitQueue[unitId][0].id == orderId;
+        }
         return false;
     }
 
@@ -86,6 +91,7 @@ export class OrderQueueService {
             let order = this.unitQueue[unitId].pop();
             if (order) {
                 print("order", order.id, order.type, order.targetWidget && GetObjectName(order.targetWidget.id));
+                unit.issueImmediateOrder(OrderId.Stop);
                 switch (order.type) {
                     case "target":
                         if (order.targetWidget) unit.issueTargetOrder(order.id, order.targetWidget);

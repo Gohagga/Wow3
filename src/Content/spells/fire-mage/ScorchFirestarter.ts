@@ -9,7 +9,10 @@ import { AttackType } from "../../../systems/damage/AttackType";
 import { DamageType } from "../../../systems/damage/DamageType";
 import { HeroStat } from "../../../systems/hero-stats/HeroStat";
 import { IHeroStatService } from "../../../systems/hero-stats/IHeroStatService";
+import { CastBar } from "../../../systems/progress-bars/CastBar";
 import { CastBarService } from "../../../systems/progress-bars/CastBarService";
+import { ICastBarService } from "../../../systems/progress-bars/ICastBarService";
+import { SpellcastingService } from "../../../systems/progress-bars/SpellcastingService";
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
 import { Scorch, ScorchConfig, ScorchUnitData } from "./Scorch";
@@ -28,8 +31,9 @@ export class ScorchFirestarter extends AbilityBase implements IUnitConfigurable<
         abilityEventHandler: IAbilityEventHandler,
         private readonly damageService: IDamageService,
         private readonly statService: IHeroStatService,
-        private readonly castBarService: CastBarService,
+        private readonly castBarService: ICastBarService,
         private readonly lastTargetService: LastTargetService,
+        private readonly spellcastingService: SpellcastingService,
     ) {
         super({
             codeId: data.scorchFirestarterCodeId,
@@ -52,21 +56,23 @@ export class ScorchFirestarter extends AbilityBase implements IUnitConfigurable<
         caster.removeAbility(this.removedBuffId);
 
         // Try queueing this spell, if yes stop here
-        if (this.castBarService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return;
-        print("after q")
-        if (this.castBarService.GetCurrentlyCastingSpell(caster) == this.id) return;
-        print("Cast")
+        // if (this.castBarService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return;
+        if (this.spellcastingService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return;
+
+        // print("after q")
+        // if (this.castBarService.GetCurrentlyCastingSpell(caster) == this.id) return;
+        // print("Cast")
 
         let data = this.GetUnitConfig(caster);
 
         let target = this.lastTargetService.Get(caster);
         if (!target) return;
 
-        const currentOrder = GetIssuedOrderId();
-        if (data.Firestarter == false)
-            caster.issueImmediateOrder(OrderId.Stop);
-        else if (currentOrder != 0 && currentOrder != OrderId.Move && currentOrder != OrderId.Smart)
-            caster.issueImmediateOrder(OrderId.Stop);
+        // const currentOrder = GetIssuedOrderId();
+        // if (data.Firestarter == false)
+        //     caster.issueImmediateOrder(OrderId.Stop);
+        // else if (currentOrder != 0 && currentOrder != OrderId.Move && currentOrder != OrderId.Smart)
+        //     caster.issueImmediateOrder(OrderId.Stop);
 
         if (caster.inRangeOfUnit(target, data.Range)) {
 
@@ -74,7 +80,7 @@ export class ScorchFirestarter extends AbilityBase implements IUnitConfigurable<
             caster.setAnimation('spell channel');
             SetUnitFacing(caster.handle, Atan2(caster.y-target.y, caster.x-target.x));
             let interruptTimer = new Timer();
-            this.castBarService.CreateCastBar(caster, this.id, data.CastTime, bar => {
+            this.spellcastingService.CastSpell(caster, this.id, data.CastTime, bar => {
                 
                 let tim = new Timer();
                 tim.start(0.3, false, () => {
@@ -85,18 +91,19 @@ export class ScorchFirestarter extends AbilityBase implements IUnitConfigurable<
                     tim.destroy();
                 });
                 interruptTimer.destroy();
-            }).OnInterrupt((bar, orderId) => {
-
-                if (orderId == this.orderId ||
-                    orderId == data.NonInterruptOrderId) return 'ignore';
-
-                if (data.Firestarter && (orderId == OrderId.Move || orderId == OrderId.Smart))
-                    return 'ignore';
                 
-                if (!data.Firestarter) caster.issueImmediateOrder(OrderId.Stop);
+            }, (orderId: number, castBar: CastBar) => {
 
-                interruptTimer.destroy();
-                return 'destroyCastBar';
+                if (orderId == OrderId.Move || orderId == OrderId.Smart)
+                    return true;
+
+                if (orderId != data.NonInterruptOrderId)
+                    castBar.alive = false;
+                    
+                if (castBar.isDone)
+                    return false;
+                    
+                return true;
             });
             
             caster.queueAnimation("spell channel");

@@ -4,6 +4,9 @@ import { ProgressBar } from "./ProgressBar";
 export class CastBar extends ProgressBar {
     private static instance: Record<number, number> = {};
 
+    public alive = true;
+    private _isDone = false;
+
     constructor(
         unit: Unit,
         model: string,
@@ -24,7 +27,16 @@ export class CastBar extends ProgressBar {
         BlzSetSpecialEffectTime(this.sfx, 0);
 
         if (this.done) {
-            TimerStart(this.timer2, 0.01, true, () => this.UpdatePercentage());
+            this._isDone = false;
+            TimerStart(this.timer2, 0.01, true, () => 
+            {
+                if (!this.alive) {
+                    print("CastBar not alive, destroying");
+                    this.Destroy();
+                }
+                this.UpdatePercentage();
+            });
+
             if (spellId) CastBar.instance[this.unit.id] = spellId;
 
             if (castTime < 0.15) DestroyEffect(this.sfx);
@@ -42,22 +54,32 @@ export class CastBar extends ProgressBar {
     }
 
     public Finish() {
+        this.alive = false;
         BlzSetSpecialEffectTimeScale(this.sfx, 3.0);
         DestroyEffect(this.sfx);
         PauseTimer(this.timer2);
         DestroyTimer(this.timer2);
+
+        this._isDone = true;
         if (this.unit.id in CastBar.instance) delete CastBar.instance[this.unit.id];
     }
 
     public Destroy() {
+        this.alive = false;
         BlzSetSpecialEffectAlpha(this.sfx, 0);
         DestroyEffect(this.sfx);
         PauseTimer(this.timer2);
         DestroyTimer(this.timer2);
+
+        this._isDone = true;
         if (this.unit.id in CastBar.instance) delete CastBar.instance[this.unit.id];
     }
 
     public RemainingTime(): number {
         return 0.01 * math.abs(this.endValue - this.curValue);
+    }
+
+    public get isDone() {
+        return this._isDone;
     }
 }

@@ -1,3 +1,6 @@
+import { OrderId } from "w3ts/globals/order";
+import { Log } from "../../Log";
+
 export type InterruptableCondition = (orderId: number) => boolean
 
 export class InterruptableService {
@@ -15,12 +18,18 @@ export class InterruptableService {
 
             if (this.lock) return;
 
+            let order = GetIssuedOrderId();
+            if (order != OrderId.Move
+                && order != OrderId.Stop
+                && order != OrderId.Smart
+                && order != OrderId.Holdposition)
+                return;
+
             const unit = GetTriggerUnit();
             const unitId = GetHandleId(unit);
             if (!(unitId !in this.instance)) return;
-            const instance = this.instance[unitId];
+            const instance = this.instance[unitId] || [];
             let remaining: InterruptableCondition[] = [];
-            let order = GetIssuedOrderId();
 
             if (instance.length > 0) {
                 // I think this is learning abilities order ids
@@ -30,6 +39,7 @@ export class InterruptableService {
             for (let i = 0; i < instance.length; i++) {
 
                 this.lock = true;
+                print("Resolving Interruptable");
                 if (instance[i](GetIssuedOrderId())) {
                     remaining.push(instance[i]);
                 }
@@ -43,6 +53,32 @@ export class InterruptableService {
         this.lock = true;
         action();
         this.lock = false;
+    }
+
+    public Fire(unit: unit, order: number) {
+        if (this.lock) return;
+
+        print("Fire")
+        const unitId = GetHandleId(unit);
+        if (unitId in this.instance == false) return;
+        
+        try {
+            const instance = this.instance[unitId] || [];
+            let remaining: InterruptableCondition[] = [];
+
+            for (let i = 0; i < instance.length; i++) {
+
+                this.lock = true;
+                print("Resolving Interruptable");
+                if (instance[i](order)) {
+                    remaining.push(instance[i]);
+                }
+                this.lock = false;
+            }
+            this.instance[unitId] = remaining;
+        } catch (ex: any) {
+            Log.Error(ex);
+        }
     }
 
     public Register(unit: unit, condition: InterruptableCondition) {
