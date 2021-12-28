@@ -8,3 +8,215 @@ STRING 2
 Force 1
 }
 
+STRING 3
+// Units: E000 (BalanceDruid), Name (Name)
+{
+BalanceDruid
+}
+
+STRING 4
+// Units: h000 (Training Dummy), Name (Name)
+{
+Training Dummy
+}
+
+STRING 5
+// Units: h001 (Healing Dummy), Name (Name)
+{
+Healing Dummy
+}
+
+STRING 7
+{
+Just another Warcraft III map
+}
+
+STRING 8
+{
+Any
+}
+
+STRING 9
+{
+Nondescript
+}
+
+STRING 10
+{
+Unknown
+}
+
+STRING 11
+// Abilities: A000 (Healing Dummy Health Loss Passive), Name (Name)
+{
+Healing Dummy Health Loss Passive
+}
+
+STRING 13
+// Abilities: AC11 (BalanceDruid - Wrath), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 14
+// Abilities: AC11 (BalanceDruid - Wrath), Name (Name)
+{
+BalanceDruid - Wrath
+}
+
+STRING 15
+// Abilities: AP01 (Projectile Wrath), Name (Name)
+{
+Projectile Wrath
+}
+
+STRING 16
+// Units: nDUM (DUMMY), Name (Name)
+{
+DUMMY
+}
+
+STRING 17
+// Abilities: AC12 (BalanceDruid - Starfire), Name (Name)
+{
+BalanceDruid - Starfire
+}
+
+STRING 19
+// Abilities: AC12 (BalanceDruid - Starfire), Hotkey (Hotkey - Normal)
+{
+W
+}
+
+STRING 21
+// Abilities: AC14 (BalanceDruid - Moonfire), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 22
+// Abilities: AC14 (BalanceDruid - Moonfire), Name (Name)
+{
+BalanceDruid - Moonfire
+}
+
+STRING 23
+// Abilities: AC15 (BalanceDruid - Sunfire), Name (Name)
+{
+BalanceDruid - Sunfire
+}
+
+STRING 25
+// Abilities: AC15 (BalanceDruid - Sunfire), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 26
+// Abilities: AP02 (Projectile Pyroblast), Name (Name)
+{
+Projectile Pyroblast
+}
+
+STRING 27
+// Abilities: AC21 (FireMage - Pyroblast), Name (Name)
+{
+FireMage - Pyroblast
+}
+
+STRING 28
+// Abilities: AC21 (FireMage - Pyroblast), Hotkey (Hotkey - Normal)
+{
+W
+}
+
+STRING 29
+// Abilities: A002 (_ Dummy Berserk Template), Name (Name)
+{
+_ Dummy Berserk Template
+}
+
+STRING 30
+// Abilities: A002 (_ Dummy Berserk Template), Hotkey (Hotkey - Normal)
+{
+W
+}
+
+STRING 31
+// Abilities: AC22 (FireMage - Fire Blast), Name (Name)
+{
+FireMage - Fire Blast
+}
+
+STRING 32
+// Abilities: AC22 (FireMage - Fire Blast), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 33
+// Abilities: A003 (_ Mana Shield Template), Name (Name)
+{
+_ Mana Shield Template
+}
+
+STRING 34
+// Abilities: A003 (_ Mana Shield Template), Hotkey (Hotkey - Normal)
+{
+E
+}
+
+STRING 35
+// Abilities: AC24 (FireMage - Scorch Firestarter), Name (Name)
+{
+FireMage - Scorch Firestarter
+}
+
+STRING 36
+// Abilities: AC24 (FireMage - Scorch Firestarter), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 37
+// Abilities: AC23 (FireMage - Scorch), Name (Name)
+{
+FireMage - Scorch
+}
+
+STRING 38
+// Abilities: AC23 (FireMage - Scorch), Hotkey (Hotkey - Normal)
+{
+Q
+}
+
+STRING 39
+// Abilities: AC25 (FireMage - HotStreak Aura), Name (Name)
+{
+FireMage - HotStreak Aura
+}
+
+STRING 40
+// Buffs/Effects: BC21 (FireMage - Heating Up), EditorName (Name (Editor Only))
+{
+FireMage - Heating Up
+}
+
+STRING 41
+// Buffs/Effects: BC22 (FireMage - Hot Streak), EditorName (Name (Editor Only))
+{
+FireMage - Hot Streak
+}
+
+STRING 42
+// Buffs/Effects: BC21 (FireMage - Heating Up), Buffubertip (Tooltip - Extended)
+{
+Crit again to gain Hot Streak.
+}
+
+STRING 43
+// Buffs/Effects: BC22 (FireMage - Hot Streak), Buffubertip (Tooltip - Extended)
+{
+Your next Pyroblast is instant.
+}
+

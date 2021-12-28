@@ -11,79 +11,88 @@ import { AttackType } from "../../../systems/damage/AttackType";
 import { DamageType } from "../../../systems/damage/DamageType";
 import { HeroStat } from "../../../systems/hero-stats/HeroStat";
 import { IHeroStatService } from "../../../systems/hero-stats/IHeroStatService";
+import { CastBar } from "../../../systems/progress-bars/CastBar";
 import { SpellcastingService } from "../../../systems/progress-bars/SpellcastingService";
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
+import { NaturalBalance } from "./NaturalBalance";
 
-export interface FireBlastConfig extends Wc3AbilityData {
+export interface StarfireConfig extends Wc3AbilityData {
     sfxModelPath: string,
 }
 
-type FireBlastUnitData = {
+type StarfireUnitData = {
     Damage: number,
-    Range: number,
+    CastTime: number,
+    CleaveRadius: number,
+    Radius: number,
     Cost: number,
     Cooldown: number,
-    BonusCrit: number,
-    CastableWhileMoving: boolean
+
+    NonInterruptOrderId: number,
 }
 
-export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlastUnitData> {
+export class Starfire extends AbilityBase implements IUnitConfigurable<StarfireUnitData> {
 
-    public unitConfig = new UnitConfigurable<FireBlastUnitData>(() => ({
+    public unitConfig = new UnitConfigurable<StarfireUnitData>(() => ({
         Damage: 20,
-        Range: 1000,
+        CastTime: 2.5,
+        CleaveRadius: 0,
+        Radius: 1000,
         Cost: 13,
         Cooldown: 4.5,
-        BonusCrit: 0,
-        CastableWhileMoving: false
+
+        NonInterruptOrderId: FourCC('AC13')
     }));
 
     private readonly sfxModelPath: string;
 
     constructor(
-        data: FireBlastConfig,
+        data: StarfireConfig,
         abilityEventHandler: IAbilityEventHandler,
         private readonly damageService: IDamageService,
         private readonly statService: IHeroStatService,
-        private readonly lastTargetService: LastTargetService,
-        private readonly spellcastingService: SpellcastingService
+        private readonly spellcastingService: SpellcastingService,
+        private readonly naturalBalance: NaturalBalance,
     ) {
         super(data);
         this.sfxModelPath = data.sfxModelPath;
-        abilityEventHandler.OnAbilityEnd(this.id, e => this.Execute(e));
+        abilityEventHandler.OnAbilityCast(this.id, e => this.Execute(e));
     }
 
     Execute(e: IAbilityEvent): void {
-        Log.Info("Cast Fire blast");
+        Log.Info("Cast Starfire");
 
         let caster = e.caster;
-        let target = this.lastTargetService.Get(caster);
+        let target = e.targetUnit;
         let data = this.GetUnitConfig(caster);
 
-        if (!target) {
-            // Return no target error
-            return; 
-        } else if (!caster.inRangeOfUnit(target, data.Range)) {
-            // If target is in range error
-            return;
-        }
+        if (!target) return;
 
-        if (data.CastableWhileMoving == false && this.spellcastingService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e)))
-            return;
+        if (this.spellcastingService.TryQueueOrder(caster, this.orderId, 'target', target)) return;
     
         const victim = target;
-        this.statService.DoWithModifiedStat(caster, HeroStat.CritChance, data.BonusCrit, () => {
-
+        this.spellcastingService.CastSpell(caster, this.id, data.CastTime, () => {
             let int = this.statService.GetStat(caster, HeroStat.Int);
-            this.damageService.UnitDamageTarget(caster, victim, data.Damage + int, AttackType.Spell, DamageType.Fire);
-            new Effect(this.sfxModelPath, victim, 'chest').destroy();
-            caster.queueAnimation("spell");
+            this.damageService.UnitDamageTarget(caster, victim, data.Damage + int, AttackType.Spell, DamageType.Arcane);
+            let eff = new Effect(this.sfxModelPath, victim, 'origin')
+            eff.setTimeScale(1.5);
+            eff.destroy();
+            this.naturalBalance.SwapToLunar(caster);            
+        }, (orderId: number, castBar: CastBar) => {
+            
+            if (orderId != data.NonInterruptOrderId)
+                castBar.alive = false;
+
+            if (castBar.isDone)
+                return false;
+            
+            return true;
         });
     }
     
     GetUnitConfig = (unit: Unit) => this.unitConfig.GetUnitConfig(unit);
-    UpdateUnitConfig(unit: Unit, cb: (this: void, config: FireBlastUnitData) => void): void {
+    UpdateUnitConfig(unit: Unit, cb: (this: void, config: StarfireUnitData) => void): void {
         this.unitConfig.UpdateUnitConfig(unit, cb);
         this.UpdateUnitSkill(unit);
     }
@@ -94,12 +103,9 @@ export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlas
         const dmg = string.format("%.2f", data.Damage + int);
         
         let tooltip = 
-`Inflicts ${dmg} Fire damage to the last targeted enemy.
+`Inflicts ${dmg} Arcane damage to the targeted enemy.
 
 |cffffd9b3Cooldown ${data.Cooldown}s|r`
-
-        if (data.CastableWhileMoving) 
-            tooltip += "\n|cffffd9b3Castable while moving and while casting other spells.|r";
 
         this.UpdateUnitAbilityBase(unit, tooltip);
     }

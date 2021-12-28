@@ -15,11 +15,11 @@ import { SpellcastingService } from "../../../systems/progress-bars/Spellcasting
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
 
-export interface FireBlastConfig extends Wc3AbilityData {
+export interface SunfireConfig extends Wc3AbilityData {
     sfxModelPath: string,
 }
 
-type FireBlastUnitData = {
+type SunfireUnitData = {
     Damage: number,
     Range: number,
     Cost: number,
@@ -28,9 +28,9 @@ type FireBlastUnitData = {
     CastableWhileMoving: boolean
 }
 
-export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlastUnitData> {
+export class Sunfire extends AbilityBase implements IUnitConfigurable<SunfireUnitData> {
 
-    public unitConfig = new UnitConfigurable<FireBlastUnitData>(() => ({
+    public unitConfig = new UnitConfigurable<SunfireUnitData>(() => ({
         Damage: 20,
         Range: 1000,
         Cost: 13,
@@ -42,23 +42,22 @@ export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlas
     private readonly sfxModelPath: string;
 
     constructor(
-        data: FireBlastConfig,
+        data: SunfireConfig,
         abilityEventHandler: IAbilityEventHandler,
         private readonly damageService: IDamageService,
         private readonly statService: IHeroStatService,
-        private readonly lastTargetService: LastTargetService,
         private readonly spellcastingService: SpellcastingService
     ) {
         super(data);
         this.sfxModelPath = data.sfxModelPath;
-        abilityEventHandler.OnAbilityEnd(this.id, e => this.Execute(e));
+        abilityEventHandler.OnAbilityCast(this.id, e => this.Execute(e));
     }
 
     Execute(e: IAbilityEvent): void {
         Log.Info("Cast Fire blast");
 
         let caster = e.caster;
-        let target = this.lastTargetService.Get(caster);
+        let target = e.targetUnit;
         let data = this.GetUnitConfig(caster);
 
         if (!target) {
@@ -69,21 +68,21 @@ export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlas
             return;
         }
 
-        if (data.CastableWhileMoving == false && this.spellcastingService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e)))
-            return;
+        if (this.spellcastingService.TryQueueOrder(caster, this.orderId, 'target', target)) return;
     
         const victim = target;
         this.statService.DoWithModifiedStat(caster, HeroStat.CritChance, data.BonusCrit, () => {
 
             let int = this.statService.GetStat(caster, HeroStat.Int);
             this.damageService.UnitDamageTarget(caster, victim, data.Damage + int, AttackType.Spell, DamageType.Fire);
-            new Effect(this.sfxModelPath, victim, 'chest').destroy();
+            let eff = new Effect(this.sfxModelPath, victim, 'origin');
+            eff.destroy();
             caster.queueAnimation("spell");
         });
     }
     
     GetUnitConfig = (unit: Unit) => this.unitConfig.GetUnitConfig(unit);
-    UpdateUnitConfig(unit: Unit, cb: (this: void, config: FireBlastUnitData) => void): void {
+    UpdateUnitConfig(unit: Unit, cb: (this: void, config: SunfireUnitData) => void): void {
         this.unitConfig.UpdateUnitConfig(unit, cb);
         this.UpdateUnitSkill(unit);
     }

@@ -14,15 +14,16 @@
         "../node_modules/*/lib/index",
         "../node_modules/*/index",
         "../node_modules/*/dist/index",
-        "../node_modules/*"
+        "../node_modules/*",
+        "./*"
       ]
     },
     "plugins": [
       {
         "transform": "war3-transformer",
-        "mapDir": "D:/wc3-projects/Wow3 Project/Wow3/maps/BlackrockCaverns.w3x",
-        "entryFile": "D:/wc3-projects/Wow3 Project/Wow3/src/main.ts",
-        "outputDir": "D:/wc3-projects/Wow3 Project/Wow3/dist/BlackrockCaverns.w3x"
+        "mapDir": "C:/Users/bartul.grbin/Documents/Games/Wow3/maps/Wow3HeroTestMap.w3x",
+        "entryFile": "C:/Users/bartul.grbin/Documents/Games/Wow3/src/main.ts",
+        "outputDir": "C:/Users/bartul.grbin/Documents/Games/Wow3/dist/Wow3HeroTestMap.w3x"
       }
     ],
     "types": [

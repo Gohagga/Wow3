@@ -7,14 +7,14 @@ export function GenerateBasicTalentView(cfg: IBasicTalentViewConfig, parent: Fra
 
     if (index in cachedViews) return cachedViews[index];
 
-    const linkIntersection = Frame.fromHandle(BlzCreateFrameByType("BACKDROP", "LinkIntersection", parent.handle, "", 0));
     const links = [
         Frame.fromHandle(BlzCreateFrameByType("BACKDROP", "LeftLink", parent.handle, "", 0)),
         Frame.fromHandle(BlzCreateFrameByType("BACKDROP", "UpLink", parent.handle, "", 0)),
         Frame.fromHandle(BlzCreateFrameByType("BACKDROP", "RightLink", parent.handle, "", 0)),
         Frame.fromHandle(BlzCreateFrameByType("BACKDROP", "DownLink", parent.handle, "", 0)),
-        linkIntersection
+        Frame.fromHandle(BlzCreateFrameByType("BACKDROP", "LinkIntersection", parent.handle, "", 0))
     ];
+    const linkIntersection = links[4];
 
     const highlight = Frame.fromHandle(BlzCreateFrameByType("BACKDROP", "AvailableImage", parent.handle, "", 0));
     const buttonMain = new Frame("ScoreScreenBottomButtonTemplate", parent, 0, 0);

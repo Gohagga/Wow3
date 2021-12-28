@@ -1,7 +1,7 @@
 {
   "mapFolder": "Wow3HeroTestMap.w3x",
   "minifyScript": false,
-  "gameExecutable": "C:\\Program Files (x86)\\Warcraft III\\_retail_\\x86_64\\Warcraft III.exe",
+  "gameExecutable": "C:\\Users\\bartul.grbin\\games\\Warcraft III\\_retail_\\x86_64\\Warcraft III.exe",
   "outputFolder": "./dist/bin",
   "archiveOutputFolders": [
     "./versions",

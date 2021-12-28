@@ -384,4 +384,11 @@ export abstract class TalentTree {
             return this._rankState[index];
         return this._tempRankState[index];
     }
+
+    public GetTalentTempStateXy(x: number, y: number) {
+        let index = x + y * this._columns;
+        if (!this._tempRankState)
+            return this._rankState[index];
+        return this._tempRankState[index];
+    }
 }
