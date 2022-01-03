@@ -18,14 +18,14 @@
 //         abilityId: number,
 //         level: number = 1)
 //     {
-//         print("Registerinng this", svc.config.dummyOwningPlayer, svc.config?.dummyUnitId, order, abilityId, level);
+//         // print("Registerinng this", svc.config.dummyOwningPlayer, svc.config?.dummyUnitId, order, abilityId, level);
 //         this.config = svc.config;
 //         this.dummy = new Unit(svc.config.dummyOwningPlayer, svc.config.dummyUnitId, 0, 0, 0, 0);
 //         this.dummy.addAbility(abilityId);
 //         this.dummy.setAbilityLevel(abilityId, level);
 //         this.dummy.removeGuardPosition();
 //         this.ability = this.dummy.getAbility(abilityId);
-//         print("Registered");
+//         // print("Registered");
 //     }
 
 //     Modify(cb: (ability: ability) => void): void {

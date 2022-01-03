@@ -14,6 +14,7 @@ import { IHeroStatService } from "../../../systems/hero-stats/IHeroStatService";
 import { SpellcastingService } from "../../../systems/progress-bars/SpellcastingService";
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
+import { Ignite } from "./Ignite";
 
 export interface FireBlastConfig extends Wc3AbilityData {
     sfxModelPath: string,
@@ -47,7 +48,8 @@ export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlas
         private readonly damageService: IDamageService,
         private readonly statService: IHeroStatService,
         private readonly lastTargetService: LastTargetService,
-        private readonly spellcastingService: SpellcastingService
+        private readonly spellcastingService: SpellcastingService,
+        private readonly ignite: Ignite,
     ) {
         super(data);
         this.sfxModelPath = data.sfxModelPath;
@@ -69,14 +71,15 @@ export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlas
             return;
         }
 
-        if (data.CastableWhileMoving == false && this.spellcastingService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e)))
-            return;
+        // if (data.CastableWhileMoving == false && this.spellcastingService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e)))
+        //     return;
     
         const victim = target;
         this.statService.DoWithModifiedStat(caster, HeroStat.CritChance, data.BonusCrit, () => {
 
             let int = this.statService.GetStat(caster, HeroStat.Int);
-            this.damageService.UnitDamageTarget(caster, victim, data.Damage + int, AttackType.Spell, DamageType.Fire);
+            let damageEvent = this.damageService.UnitDamageTarget(caster, victim, data.Damage + int, AttackType.Spell, DamageType.Fire);
+            this.ignite.AddIfHasAbility(victim, caster, damageEvent.damage);
             new Effect(this.sfxModelPath, victim, 'chest').destroy();
             caster.queueAnimation("spell");
         });

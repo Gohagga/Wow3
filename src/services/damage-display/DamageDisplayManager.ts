@@ -22,8 +22,11 @@ export class DamageDisplayManager {
         let ang = math.random(45, 135) * bj_DEGTORAD;
         let dx = 0.086203125 * math.cos(ang);
         let dy = 0.086203125 * math.sin(ang);
+
+        let dmgString = damage.toString();
+        let tim = new Timer();
         if (owner == GetLocalPlayer()) {
-            let tt = CreateTextTagUnitBJ(damage.toString(), target, 35, size, rgb[0], rgb[1], rgb[2], 0);
+            let tt = CreateTextTagUnitBJ(dmgString, target, 35, size, rgb[0], rgb[1], rgb[2], 0);
 
             SetTextTagPermanent(tt, false);
             SetTextTagFadepoint(tt, 0.4);
@@ -31,7 +34,7 @@ export class DamageDisplayManager {
                 let tim = new Timer();
                 let count = 12;
                 tim.start(0.015, true, () => {
-                    if (count-- > 0) SetTextTagTextBJ(tt, damage.toString(), size++);
+                    if (count-- > 0) SetTextTagTextBJ(tt, dmgString, size++);
                     else tim.destroy();
                 });
                 SetTextTagVelocity(tt, dx * 0.3, dy * 0.3)
@@ -40,6 +43,8 @@ export class DamageDisplayManager {
                 SetTextTagVelocity(tt, dx, dy);
                 SetTextTagLifespan(tt, 0.6);
             }
+        } else {
+            tim.destroy();
         }
     }
 }

@@ -21,6 +21,7 @@ import { SpellcastingService } from "../../../systems/progress-bars/Spellcasting
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
 import { HotStreak } from "./HotStreak";
+import { Ignite } from "./Ignite";
 
 export interface PyroblastConfig extends Wc3AbilityData {
     dummyPyroblast: {
@@ -32,14 +33,16 @@ export interface PyroblastConfig extends Wc3AbilityData {
 export type PyroblastUnitData = {
     Damage: number
     CastTime: number,
+    IgniteMultiplier: number,
     NonInterruptOrderId: number | null,
 }
 
 export class Pyroblast extends AbilityBase implements IUnitConfigurable<PyroblastUnitData> {
 
     public readonly unitConfig = new UnitConfigurable<PyroblastUnitData>(() => ({
-        Damage: 20,
+        Damage: 50,
         CastTime: 3.0,
+        IgniteMultiplier: 1,
         NonInterruptOrderId: null,
     }));
 
@@ -52,8 +55,8 @@ export class Pyroblast extends AbilityBase implements IUnitConfigurable<Pyroblas
         private readonly hotStreak: HotStreak,
         private readonly damageService: IDamageService,
         private readonly statService: IHeroStatService,
-        private readonly castBarService: ICastBarService,
         private readonly spellcastingService: SpellcastingService,
+        private readonly ignite: Ignite,
     ) {
         super(data);
         abilityEventHandler.OnAbilityCast(this.id, e => this.Execute(e));
@@ -63,7 +66,6 @@ export class Pyroblast extends AbilityBase implements IUnitConfigurable<Pyroblas
 
     Execute(e: IAbilityEvent): boolean {
         
-        print("PYRO")
         let caster = e.caster;
         if (!e.targetUnit) return false;
         let target = e.targetUnit;
@@ -71,14 +73,16 @@ export class Pyroblast extends AbilityBase implements IUnitConfigurable<Pyroblas
         let data = this.GetUnitConfig(caster);
         let int = this.statService.GetStat(caster, HeroStat.Int);
 
-        print("try to queue")
         if (this.spellcastingService.TryQueueOrder(caster, this.orderId, 'target', target)) return false;
 
         let onLaunch = () => {
             caster.queueAnimation("spell");
             this.projectile.Cast(Coords.fromUnit(caster), target, 1, null, () => {
-                this.damageService.UnitDamageTarget(caster, target, int + data.Damage, AttackType.Spell, DamageType.Fire);
+                let damageEvent = this.damageService.UnitDamageTarget(caster, target, int + data.Damage, AttackType.Spell, DamageType.Fire);
+                this.ignite.AddIfHasAbility(target, caster, damageEvent.damage * data.IgniteMultiplier);
             });
+            if (this.spellcastingService.HasQueuedAbility(caster) == false)
+                caster.issueTargetOrder(OrderId.Attack, target);
         }
 
         // Insta cast with hotstreak
@@ -103,61 +107,7 @@ export class Pyroblast extends AbilityBase implements IUnitConfigurable<Pyroblas
     
         return true;
     }
-
-    // Execute(e: IAbilityEvent): boolean {
-        
-    //     print("PYRO")
-    //     let caster = e.caster;
-    //     if (!e.targetUnit) return false;
-    //     let target = e.targetUnit;
-
-    //     let data = this.GetUnitConfig(caster);
-    //     let int = this.statService.GetStat(caster, HeroStat.Int);
-
-    //     // If we're already casting this spell, don't cast another
-    //     print("Casting spell", this.castBarService.GetCurrentlyCastingSpell(caster));
-
-    //     let onLaunch = () => {
-    //         caster.queueAnimation("spell");
-    //         this.projectile.Cast(Coords.fromUnit(caster), target, 1, null, () => {
-    //             this.damageService.UnitDamageTarget(caster, target, int + data.Damage, AttackType.Spell, DamageType.Fire);
-    //         });
-    //     }
-
-    //     // Insta cast with hotstreak
-    //     if (this.hotStreak.Consume(caster)) {
-    //         caster.issueImmediateOrder(OrderId.Stop);
-    //         onLaunch();
-    //         return true;
-    //     }
-
-    //     // Try queueing this spell, if yes stop here
-    //     if (this.castBarService.TryToQueue(caster, this.orderId, 'target', target)) return false;
-    //     if (this.castBarService.GetCurrentlyCastingSpell(caster) == this.id) return false;
-
-    //     // Start casting the spell
-    //     let cb = this.castBarService.CreateCastBar(caster, this.id, data.CastTime, bar => {
-    //         onLaunch();
-    //     });
-    //     this.castBarService.OnInterrupt(cb, caster, (bar: CastBar, orderId: number) => {
-
-    //         print("Pyro Interrupt", 1)
-    //         print("Pyro Interrupt", orderId);
-
-    //         print("Pyro Interrupt", 1, orderId == this.orderId, orderId == data.NonInterruptOrderId);
-    //         if (orderId == this.orderId ||
-    //             orderId == data.NonInterruptOrderId) return 'ignore';
-            
-    //             print("Pyro Interrupt", 2)
-
-    //         // caster.issueImmediateOrder(OrderId.Stop);
-    //         print("Interrupting Pyroblast")
-    //         return 'destroyCastBar';
-    //     });
-        
-    //     return true;
-    // }
-
+    
     GetUnitConfig = (unit: Unit) => this.unitConfig.GetUnitConfig(unit);
     UpdateUnitConfig(unit: Unit, cb: (config: PyroblastUnitData) => void): void {
         this.unitConfig.UpdateUnitConfig(unit, cb);

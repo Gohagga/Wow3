@@ -31,7 +31,6 @@ export class CastBar extends ProgressBar {
             TimerStart(this.timer2, 0.01, true, () => 
             {
                 if (!this.alive) {
-                    print("CastBar not alive, destroying");
                     this.Destroy();
                 }
                 this.UpdatePercentage();

@@ -22,6 +22,7 @@ import { SpellcastingService } from "../../../systems/progress-bars/Spellcasting
 import { IUnitConfigurable } from "../../../systems/UnitConfigurable/IUnitConfigurable";
 import { UnitConfigurable } from "../../../systems/UnitConfigurable/UnitConfigurable";
 import { HotStreak } from "./HotStreak";
+import { Ignite } from "./Ignite";
 
 export interface ScorchConfig extends Wc3AbilityData {
     scorchFirestarterCodeId: string,
@@ -59,9 +60,9 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
         abilityEventHandler: IAbilityEventHandler,
         private readonly damageService: IDamageService,
         private readonly statService: IHeroStatService,
-        private readonly castBarService: ICastBarService,
         private readonly lastTargetService: LastTargetService,
         private readonly spellcastingService: SpellcastingService,
+        private readonly ignite: Ignite,
     ) {
         super(data);
         this.removedBuffId = FourCC(data.removedBuffCodeId);
@@ -73,7 +74,7 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
 
     Execute(e: IAbilityEvent): boolean {
         
-        print("SCORCH")
+        // print("SCORCH")
         let caster = e.caster;
         
         if (this.spellcastingService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return false;
@@ -93,12 +94,17 @@ export class Scorch extends AbilityBase implements IUnitConfigurable<ScorchUnitD
                 tim.start(0.3, false, () => {
 
                     let int = this.statService.GetStat(caster, HeroStat.Int);
-                    this.statService.DoWithModifiedStat(caster, HeroStat.CritChance, data.CritBonus, () => 
-                        this.damageService.UnitDamageTarget(caster, victim, int + data.Damage, AttackType.Spell, DamageType.Fire));
+                    this.statService.DoWithModifiedStat(caster, HeroStat.CritChance, data.CritBonus, () => {
+                        let damageEvent = this.damageService.UnitDamageTarget(caster, victim, int + data.Damage, AttackType.Spell, DamageType.Fire);
+                        this.ignite.AddIfHasAbility(victim, caster, damageEvent.damage);
+                    });
 
                     new Effect(this.sfxModelPath, victim, 'chest').destroy();
                     tim.destroy();
                 });
+                // if (this.spellcastingService.HasQueuedAbility(caster) == false)
+                caster.issueTargetOrder(OrderId.Attack, victim);
+
             }, (orderId: number, castBar: CastBar) => {
 
                 if (orderId != data.NonInterruptOrderId)

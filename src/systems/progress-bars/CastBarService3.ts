@@ -38,9 +38,9 @@ export class CastBarService3 implements ICastBarService {
 
     GetCurrentlyCastingSpell(caster: Unit): number {
         const casterId = caster.id;
-        print("exists?", casterId in this.castBars);
+        // print("exists?", casterId in this.castBars);
         if (casterId in this.castBars && this.castBars[casterId]) {
-            print("exists", this.castBars[casterId].spellId);
+            // print("exists", this.castBars[casterId].spellId);
             if (!this.castBars[casterId].alive) return -1;
 
             return this.castBars[casterId].spellId;
@@ -52,12 +52,12 @@ export class CastBarService3 implements ICastBarService {
         let casterId = caster.id;
 
         if (casterId in this.castBars && this.castBars[casterId]) {
-            print("cast bar exists")
+            // print("cast bar exists")
             let castBar = this.castBars[casterId];
-            print("alive?", castBar.alive);
+            // print("alive?", castBar.alive);
             if (!castBar.isDone && castBar.RemainingTime() < this.queueTreshold && castBar) {
                 castBar.alive = true;
-                print("Queueing spell...")
+                // print("Queueing spell...")
                 let order: QueuedOrder = {
                     id: orderId,
                     type,
@@ -86,9 +86,9 @@ export class CastBarService3 implements ICastBarService {
             };
             if (casterId in this.castBars && this.castBars[casterId]) {
                 let castBar = this.castBars[casterId];
-                print("alive?", castBar.alive);
+                // print("alive?", castBar.alive);
                 if (castBar.alive && castBar.RemainingTime() < this.queueTreshold) {
-                    print("Queueing spell...")
+                    // print("Queueing spell...")
                     let order: QueuedOrder = {
                         id: orderId,
                         type: 'effect',

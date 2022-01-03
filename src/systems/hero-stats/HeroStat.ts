@@ -5,6 +5,7 @@ export enum HeroStat {
     Int,
     Agi,
     Spr,
+    Mastery,
 
     CritChance,
     CritMultiplier,
