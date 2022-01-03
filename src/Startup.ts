@@ -14,6 +14,7 @@ import { Frame, MapPlayer, Trigger, Unit } from "w3ts";
 import { FireMage } from "./content/Classes/FireMage";
 import { FireBlast } from "./content/spells/fire-mage/FireBlast";
 import { HotStreak } from "./content/spells/fire-mage/HotStreak";
+import { Ignite } from "./content/spells/fire-mage/Ignite";
 import { Pyroblast } from "./content/spells/fire-mage/Pyroblast";
 import { Scorch } from "./content/spells/fire-mage/Scorch";
 import { ScorchFirestarter } from "./content/spells/fire-mage/ScorchFirestarter";
@@ -21,6 +22,7 @@ import { Level, Log } from "./Log";
 import { OrderQueueService } from "./services/ability-queue/OrderQueueService";
 import { DamageDisplayManager } from "./services/damage-display/DamageDisplayManager";
 import { DamageService } from "./services/damage/DamageService";
+import { EnumUnitService } from "./services/enum-service/EnumUnitService";
 import { LastTargetService } from "./services/last-target/LastTargetService";
 import { AbilityEventProvider } from "./systems/ability-events/AbilityEventProvider";
 import { AutoattackEventProvider } from "./systems/damage/AutoattackEventProvider";
@@ -58,6 +60,7 @@ export function Startup() {
         const orderQueueService = new OrderQueueService();
         const castBarService = new CastBarService3(config.castBars, interruptableService, orderQueueService);
         const critManager = new CritManager(damageEventHandler, heroStatService);
+        const enumUnitService = new EnumUnitService();
         const lastTargetService = new LastTargetService();
         
         // Wc3 Event providers
@@ -66,11 +69,12 @@ export function Startup() {
 
         const spellcastingService = new SpellcastingService(config.castBars, interruptableService, orderQueueService);
     
+        let aIgnite = new Ignite(config.ignite, damageService, heroStatService, enumUnitService);
         let aFireball = new Fireball(config.fireball, dummyAbilityFactory, abilityEvent, spellcastingService);
-        let aFireBlast = new FireBlast(config.fireBlast, abilityEvent, damageService, heroStatService, lastTargetService, spellcastingService);
+        let aFireBlast = new FireBlast(config.fireBlast, abilityEvent, damageService, heroStatService, lastTargetService, spellcastingService, aIgnite);
         let aHotStreak = new HotStreak(config.hotStreak, damageEventHandler);
-        let aPyroblast = new Pyroblast(config.pyroblast, abilityEvent, dummyAbilityFactory, aHotStreak, damageService, heroStatService, castBarService, spellcastingService);
-        let aScorch = new Scorch(config.scorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService, spellcastingService);
+        let aPyroblast = new Pyroblast(config.pyroblast, abilityEvent, dummyAbilityFactory, aHotStreak, damageService, heroStatService, spellcastingService, aIgnite);
+        let aScorch = new Scorch(config.scorch, abilityEvent, damageService, heroStatService, lastTargetService, spellcastingService, aIgnite);
         let aScorchFirestarter = new ScorchFirestarter(config.scorch, aScorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService, spellcastingService);
 
         let aMoonfire = new Moonfire(config.moonfire, abilityEvent, damageService, heroStatService, spellcastingService);
@@ -80,6 +84,7 @@ export function Startup() {
         let aStarfire = new Starfire(config.starfire, abilityEvent, damageService, heroStatService, spellcastingService, aNaturalBalance);
 
         const abilities = {
+            ignite: aIgnite,
             fireball: aFireball,
             fireBlast: aFireBlast,
             hotStreak: aHotStreak,

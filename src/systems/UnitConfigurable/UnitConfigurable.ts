@@ -20,12 +20,12 @@ export class UnitConfigurable<T> implements IUnitConfigurable<T>{
     public UpdateUnitConfig(unit: Unit, cb: (config: T) => void) {
         const id = unit.id;
         let config: T;
-        if (!(id in this.instances)) {
+        if (id in this.instances == false) {
             config = this.defaultValue();
         } else {
             config = this.instances[id];
         }
-        cb(this.instances[id]);
+        cb(config);
         this.instances[id] = config;
     }
 }

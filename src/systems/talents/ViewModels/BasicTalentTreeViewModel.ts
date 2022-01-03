@@ -1,4 +1,5 @@
 import { Frame, MapPlayer, Trigger } from "w3ts";
+import { Log } from "../../../Log";
 import { ITalentSlot, TalentState } from "../Interfaces/ITalentSlot";
 import { ITalentTreeView } from "../Interfaces/ITalentTreeView";
 import { DependencyOrientation } from "../Interfaces/ITalentView";
@@ -73,7 +74,11 @@ export class BasicTalentTreeViewModel {
     OnConfirm() {
 
         if (!this._tree) return;
-        this._tree.SaveTalentRankState();
+        try {
+            this._tree.SaveTalentRankState();
+        } catch (ex: any) {
+            Log.Error(ex);
+        }
         this._onViewChanged(this, this._watcher);
     }
 
@@ -120,8 +125,8 @@ export class BasicTalentTreeViewModel {
                 }
             }
             this.UpdatePointsAndTitle();
-        } catch (ex) {
-            print(ex);
+        } catch (ex: any) {
+            Log.Error(ex);
         }
     }
 

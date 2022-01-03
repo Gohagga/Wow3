@@ -39,9 +39,7 @@ export class CastBarService implements ICastBarService {
 
     GetCurrentlyCastingSpell(caster: Unit) {
         const casterId = caster.id;
-        print("exists?", casterId in this.castBars);
         if (casterId in this.castBars && this.castBars[casterId]) {
-            print("exists", this.castBars[casterId].spellId);
             return this.castBars[casterId].spellId;
         }
         return -1;
@@ -51,10 +49,7 @@ export class CastBarService implements ICastBarService {
         
         let casterId = caster.id;
 
-        if (casterId in this.castBars) print("in cast bars")
-        if (this.castBars[casterId]) print("cast bar exists")
         if (casterId in this.castBars && this.castBars[casterId] && this.castBars[casterId].RemainingTime() < this.queueTreshold) {
-            print("Queueing spell...")
             let order: QueuedOrder = {
                 id: orderId,
                 type,
@@ -82,7 +77,6 @@ export class CastBarService implements ICastBarService {
                 targetDestructable: e.targetDestructable
             };
             if (casterId in this.castBars && this.castBars[casterId] && this.castBars[casterId].RemainingTime() < this.queueTreshold) {
-                print("Queueing spell...")
                 let order: QueuedOrder = {
                     id: orderId,
                     type: 'effect',
@@ -132,13 +126,11 @@ export class CastBarService implements ICastBarService {
             this.interruptableService.WithinLock(() => {
 
                 let result = action(castBar, orderId);
-                print("interrupt action", result)
                 if (result == 'ignore') retVal = true;
                 if (result == 'finishCastBar') castBar.Finish();
                 if (result == 'destroyCastBar') castBar.Destroy();
                 
                 if (!retVal && this.castBars[casterId] == castBar) {
-                    print("Destroying cast bar");
                     delete this.castBars[casterId];
                 }
             });

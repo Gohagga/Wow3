@@ -38,10 +38,8 @@ export class SpellcastingService {
     TryQueueOrder(caster: Unit, orderId: number, type: 'target' | 'point' | 'immediate', targetWidget?: Widget, targetPoint?: Point): boolean {
 
         let castBar = this.castBars[caster.id];
-        if (castBar) print(castBar, castBar.isDone, castBar.RemainingTime())
         if (castBar && !castBar.isDone && castBar.RemainingTime() < this.queueTreshold) {
             castBar.alive = true;
-            print("Queueing spell...");
             let order: QueuedOrder = {
                 id: orderId,
                 type,
@@ -62,7 +60,6 @@ export class SpellcastingService {
         if (castBar && !castBar.isDone && castBar.RemainingTime() < this.queueTreshold) {
             castBar.alive = true;
 
-            print("Queueing spell...");
             let eData = {
                 abilityId: e.abilityId,
                 caster,
@@ -71,7 +68,6 @@ export class SpellcastingService {
                 summonedUnit: e.summonedUnit,
                 targetDestructable: e.targetDestructable
             };
-            print("Queueing spell...")
             let order: QueuedOrder = {
                 id: orderId,
                 type: 'effect',
@@ -84,11 +80,14 @@ export class SpellcastingService {
         return false;
     }
 
+    HasQueuedAbility(caster: Unit): boolean {
+        return this.orderQueueService.GetQueueSize(caster) > 0;
+    }
+
     CastSpell(unit: Unit, spellId: number, castTime: number, afterFinish: (bar: CastBar) => void, onInterupt?: (orderId: number, castBar: CastBar) => boolean) {
         let castBar = new CastBar(unit, this.sfxModelPath, this.updatePeriod, this.castBarSize, spellId, this.defaultHeight);
         let unitId = unit.id;
         this.castBars[unitId] = castBar;
-        print("casting spells")
         castBar.CastSpell(spellId, castTime, bar => {
             bar.Finish();
             afterFinish(bar);
@@ -96,7 +95,6 @@ export class SpellcastingService {
                 return;
             }
         });
-        print("casting spell 1")
 
         if (onInterupt) this.interruptableService.Register(unit.handle, (orderId: number) => {
             return onInterupt(orderId, castBar);
@@ -110,10 +108,8 @@ export class SpellcastingService {
                 //     || orderId == OrderId.Stop
                 //     || orderId == OrderId.Holdposition)
                 //     return false;
-                print("Interrupting spellcasting logic", castBar.alive, castBar.isDone)
 
                 castBar.alive = false;
-                print(castBar.alive, "is alive")
 
                 if (castBar.isDone)
                     return false;

@@ -5,6 +5,7 @@ import { DummyUnitManagerConfig } from "systems/dummies/DummyUnitManager";
 import { OrderId } from 'w3ts/globals/order'
 import { FireBlastConfig } from "../content/spells/fire-mage/FireBlast";
 import { HotStreakConfig } from "../content/spells/fire-mage/HotStreak";
+import { IgniteConfig } from "../content/spells/fire-mage/Ignite";
 import { PyroblastConfig } from "../content/spells/fire-mage/Pyroblast";
 import { ScorchConfig } from "../content/spells/fire-mage/Scorch";
 import { Wc3AbilityData } from "../systems/abilities/Wc3AbilityData";
@@ -30,6 +31,7 @@ export class Config {
         [HeroStat.Int]: 1,
         [HeroStat.Agi]: 1,
         [HeroStat.Spr]: 1,
+        [HeroStat.Mastery]: 0,
         [HeroStat.CritChance]: 0.05,
         [HeroStat.CritMultiplier]: 1.5,
 
@@ -126,6 +128,13 @@ export class Config {
         name: 'Sunfire',
         orderId: OrderId.Monsoon,
         sfxModelPath: 'Abilities/Spells/Other/Doom/DoomDeath',
+    }
+    
+    ignite: IgniteConfig = {
+        codeId: 'A010',
+        name: 'Ignite',
+        orderId: OrderId.Manashieldon,
+        sfxModelPath: 'Environment/SmallBuildingFire/SmallBuildingFire2',
     }
 }
 

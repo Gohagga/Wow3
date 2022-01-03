@@ -9,6 +9,7 @@ import { TalentTreeBuilder } from "../../systems/talents/Models/TalentTreeBuilde
 import { Fireball } from "../spells/fire-mage/Fireball";
 import { FireBlast } from "../spells/fire-mage/FireBlast";
 import { HotStreak } from "../spells/fire-mage/HotStreak";
+import { Ignite } from "../spells/fire-mage/Ignite";
 import { Pyroblast } from "../spells/fire-mage/Pyroblast";
 import { Scorch } from "../spells/fire-mage/Scorch";
 import { ScorchFirestarter } from "../spells/fire-mage/ScorchFirestarter";
@@ -33,6 +34,7 @@ export class FireMage extends TalentTree {
             hotStreak: HotStreak,
             scorch: Scorch,
             scorchFirestarter: ScorchFirestarter,
+            ignite: Ignite,
     }) {
         super(unit);
         this.Initialize(new TalentTreeBuilder(this));
@@ -42,7 +44,7 @@ export class FireMage extends TalentTree {
 
         builder.SetColumnsRows(4, 7);
         builder.title = "Fire Mage";
-        builder.talentPoints = 15;
+        builder.talentPoints = 25;
         // builder.backgroundImage = "balancebg.blp";
 
         // The tree should be built with talents here
@@ -118,7 +120,12 @@ export class FireMage extends TalentTree {
                 Name: "Ignite",
                 Description: `Your target burns for an additional ${lvl*15}% of the total direct damage caused by your autoattack, Fire Blast, Scorch, Pyroblast and Flamestrike over 9 sec. If this effect is reapplied, any remaining damage will be added to the new Ignite.`,
                 Icon: 'Incinerate',
-                Dependency: { down: 1 }
+                Dependency: { down: 1 },
+                OnActivate: (e) => {
+                    print("ignite")
+                    print(this.unit.addAbility(this.abilities.ignite.id));
+                    this.abilities.ignite.UpdateUnitConfig(this.unit, cfg => cfg.DamageAmount = (lvl*0.15));
+                }
             }
         });
 
@@ -127,7 +134,8 @@ export class FireMage extends TalentTree {
             Name: "Wildfire",
             Description: "Every 2 sec, your Ignites may spread to another nearby enemy.",
             Icon: 'ability_mage_worldinflames',
-            Dependency: { right: 1 }
+            Dependency: { right: 1 },
+            OnActivate: (e) => this.abilities.ignite.UpdateUnitConfig(this.unit, cb => cb.Wildfire = true),
         });
 
         // Hot Streak
@@ -160,6 +168,7 @@ export class FireMage extends TalentTree {
             OnActivate: (e) => {
                 this.abilities.pyroblast.UpdateUnitConfig(this.unit, cb => cb.NonInterruptOrderId = this.abilities.fireBlast.id);
                 this.abilities.scorch.UpdateUnitConfig(this.unit, cb => cb.NonInterruptOrderId = this.abilities.fireBlast.id);
+                this.abilities.fireBlast.UpdateUnitConfig(this.unit, cb => cb.CastableWhileMoving = true);
             },
         });
 
@@ -169,6 +178,7 @@ export class FireMage extends TalentTree {
             Description: "Pyroblast cast with Hot Streak! causes double the normal Ignite damage.",
             Icon: 'ability_mage_hotstreak',
             Dependency: { down: 1 },
+            OnActivate: (e) => this.abilities.pyroblast.UpdateUnitConfig(this.unit, cb => cb.IgniteMultiplier = 2.0)
         });
             
         // Critical Mass

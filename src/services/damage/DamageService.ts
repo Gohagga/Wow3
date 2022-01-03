@@ -50,7 +50,7 @@ export class DamageService implements IDamageService {
         return event;
     }
 
-    UnitDamageTarget(source: Unit, target: Unit, amount: number, attackType: AttackType, damageType: DamageType, isCrit: boolean = false): void {
+    UnitDamageTarget(source: Unit, target: Unit, amount: number, attackType: AttackType, damageType: DamageType, isCrit: boolean = false): DamageEvent {
         
         Log.Info("Called UnitDamageTarget");
         let event = this.CreateDamageEvent({
@@ -66,9 +66,10 @@ export class DamageService implements IDamageService {
         event.damage = math.ceil(event.damage);
         source.damageTarget(event.targetUnit.handle, event.damage, false, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS);
         this.damageDisplayManager.DisplayDamageEvent(event);
+        return event;
     }
 
-    UnitHealTarget(source: Unit, target: Unit, amount: number, attackType: AttackType, damageType: DamageType, isCrit: boolean = false): void {
+    UnitHealTarget(source: Unit, target: Unit, amount: number, attackType: AttackType, damageType: DamageType, isCrit: boolean = false): DamageEvent {
         let event = this.CreateDamageEvent({
             source,
             target,
@@ -82,5 +83,6 @@ export class DamageService implements IDamageService {
         let targetUnit = event.targetUnit.handle;
         event.damage = math.floor(event.damage + 0.5);
         SetWidgetLife(targetUnit, GetWidgetLife(targetUnit) - event.damage);
+        return event;
     }
 }

@@ -22,8 +22,6 @@ export class OrderQueueService {
         const unitId = unit.id;
         if (unitId in this.unitQueue) {
 
-            print("Queue size", this.unitQueue[unitId].length);
-
             if (this.unitQueue[unitId].length > 0)
             return this.unitQueue[unitId][0].id == orderId;
         }
@@ -36,8 +34,6 @@ export class OrderQueueService {
         if (unitId in this.unitQueue == false || override)
             this.unitQueue[unitId] = [];
 
-        print(order.id, order.type);
-        
         this.unitQueue[unitId].push(order);
     }
 
@@ -80,17 +76,18 @@ export class OrderQueueService {
         this.QueueOrder(unit, queuedOrder, override);
     }
 
+    GetQueueSize(caster: Unit): number {
+        if (caster.id in this.unitQueue == false) return 0;
+        return this.unitQueue[caster.id].length;
+    }
+
     ResolveQueuedOrder(unit: Unit): boolean {
 
         const unitId = unit.id;
-        print("Resolving queued order for", unit.name);
         if (unitId in this.unitQueue) {
 
-            print("Unit has a q");
-            print(this.unitQueue[unitId].length, "orders queued");
             let order = this.unitQueue[unitId].pop();
             if (order) {
-                print("order", order.id, order.type, order.targetWidget && GetObjectName(order.targetWidget.id));
                 unit.issueImmediateOrder(OrderId.Stop);
                 switch (order.type) {
                     case "target":

@@ -39,7 +39,6 @@ export class InterruptableService {
             for (let i = 0; i < instance.length; i++) {
 
                 this.lock = true;
-                print("Resolving Interruptable");
                 if (instance[i](GetIssuedOrderId())) {
                     remaining.push(instance[i]);
                 }
@@ -58,7 +57,6 @@ export class InterruptableService {
     public Fire(unit: unit, order: number) {
         if (this.lock) return;
 
-        print("Fire")
         const unitId = GetHandleId(unit);
         if (unitId in this.instance == false) return;
         
@@ -69,7 +67,6 @@ export class InterruptableService {
             for (let i = 0; i < instance.length; i++) {
 
                 this.lock = true;
-                print("Resolving Interruptable");
                 if (instance[i](order)) {
                     remaining.push(instance[i]);
                 }

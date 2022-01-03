@@ -38,9 +38,7 @@ export class CastBarService2 implements ICastBarService {
 
     GetCurrentlyCastingSpell(caster: Unit) {
         const casterId = caster.id;
-        print("exists?", casterId in this.castBars);
         if (casterId in this.castBars && this.castBars[casterId]) {
-            print("exists", this.castBars[casterId].spellId);
             if (!this.castBars[casterId].alive) return -1;
 
             return this.castBars[casterId].spellId;
@@ -52,13 +50,9 @@ export class CastBarService2 implements ICastBarService {
         
         let casterId = caster.id;
 
-        if (casterId in this.castBars) print("in cast bars")
-        if (this.castBars[casterId]) print("cast bar exists")
         if (casterId in this.castBars && this.castBars[casterId]) {
             let castBar = this.castBars[casterId];
-            print("alive?", castBar.alive);
             if (castBar.alive && castBar.RemainingTime() < this.queueTreshold) {
-                print("Queueing spell...")
                 let order: QueuedOrder = {
                     id: orderId,
                     type,
@@ -88,9 +82,7 @@ export class CastBarService2 implements ICastBarService {
             };
             if (casterId in this.castBars && this.castBars[casterId]) {
                 let castBar = this.castBars[casterId];
-                print("alive?", castBar.alive);
                 if (castBar.alive && castBar.RemainingTime() < this.queueTreshold) {
-                    print("Queueing spell...")
                     let order: QueuedOrder = {
                         id: orderId,
                         type: 'effect',
@@ -121,13 +113,6 @@ export class CastBarService2 implements ICastBarService {
         });
 
         return castBar;
-        // return {
-        //     OnInterrupt: (action: (castBar: CastBar, orderId: number) => 'finishCastBar' | 'destroyCastBar' | 'ignore') => {
-        //         print("On Interrupt", typeof(action));
-        //         this.OnInterrupt(castBar, unit, action);
-        //         print("After interrupt");
-        //     }
-        // }
     }
 
     /**
@@ -136,28 +121,28 @@ export class CastBarService2 implements ICastBarService {
      */
     public OnInterrupt(castBar: CastBar, caster: Unit, action: (castBar: CastBar, orderId: number) => 'finishCastBar' | 'destroyCastBar' | 'ignore') {
         
-        print("On Interrupt internal")
+        // print("On Interrupt internal")
         this.interruptableService.Register(caster.handle, orderId => {
             
-            print("Interruptable?", 1)
+            // print("Interruptable?", 1)
             // If this order is the queued one, do not cancel the cast
             if (this.orderQueueService.IsOrderQueued(caster, orderId)) return true;
-            print("Interruptable?", 2)
+            // print("Interruptable?", 2)
 
             let casterId = caster.id;
             let retVal = false;
             this.interruptableService.WithinLock(() => {
 
-                print("Interruptable?", 3)
+                // print("Interruptable?", 3)
                 let result = action(castBar, orderId);
-                print("Interruptable?", 4)
-                print("interrupt action", result)
+                // print("Interruptable?", 4)
+                // print("interrupt action", result)
                 if (result == 'ignore') retVal = true;
                 if (result == 'finishCastBar') castBar.Finish();
                 if (result == 'destroyCastBar') castBar.alive = false; // castBar.Destroy();
                 
                 if (!retVal && this.castBars[casterId] == castBar && castBar.alive == false) {
-                    print("Destroying cast bar");
+                    // print("Destroying cast bar");
                     delete this.castBars[casterId];
                 }
             });

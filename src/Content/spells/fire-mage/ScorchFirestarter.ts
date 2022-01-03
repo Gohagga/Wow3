@@ -51,7 +51,7 @@ export class ScorchFirestarter extends AbilityBase implements IUnitConfigurable<
 
     Execute(e: IAbilityEvent): void {
         
-        print("SCORCH")
+        // print("SCORCH")
         let caster = e.caster;
         caster.removeAbility(this.removedBuffId);
 
@@ -59,9 +59,9 @@ export class ScorchFirestarter extends AbilityBase implements IUnitConfigurable<
         // if (this.castBarService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return;
         if (this.spellcastingService.TryToQueueAbility(caster, this.orderId, e, e => this.Execute(e))) return;
 
-        // print("after q")
+        // // print("after q")
         // if (this.castBarService.GetCurrentlyCastingSpell(caster) == this.id) return;
-        // print("Cast")
+        // // print("Cast")
 
         let data = this.GetUnitConfig(caster);
 
