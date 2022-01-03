@@ -1,6 +1,7 @@
 import { Unit } from "w3ts";
-import { TalentData } from "../Models/Talent";
+import { Talent, TalentData } from "../Models/Talent";
 
 export interface ITalentBuilder {
-    NextRank: (next: TalentData) => ITalentBuilder
+    NextRank: (next: TalentData) => ITalentBuilder,
+    Talent: Talent
 }

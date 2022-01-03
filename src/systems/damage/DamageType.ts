@@ -13,4 +13,5 @@ export const enum DamageType {
     Piercing = 1 << 4,
 
     Fire = 1 << 5,
+    Arcane = 1 << 6,
 }

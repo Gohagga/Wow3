@@ -114,7 +114,7 @@ export class ScorchFirestarter extends AbilityBase implements IUnitConfigurable<
     }
 
     GetUnitConfig = (unit: Unit) => this.unitConfig.GetUnitConfig(unit);
-    UpdateUnitConfig(unit: Unit, cb: (config: ScorchUnitData) => void): void {
+    UpdateUnitConfig(unit: Unit, cb: (this: void, config: ScorchUnitData) => void): void {
         this.unitConfig.UpdateUnitConfig(unit, cb);
         this.UpdateUnitSkill(unit);
     }

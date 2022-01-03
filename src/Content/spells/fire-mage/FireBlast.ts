@@ -86,7 +86,7 @@ export class FireBlast extends AbilityBase implements IUnitConfigurable<FireBlas
     }
     
     GetUnitConfig = (unit: Unit) => this.unitConfig.GetUnitConfig(unit);
-    UpdateUnitConfig(unit: Unit, cb: (config: FireBlastUnitData) => void): void {
+    UpdateUnitConfig(unit: Unit, cb: (this: void, config: FireBlastUnitData) => void): void {
         this.unitConfig.UpdateUnitConfig(unit, cb);
         this.UpdateUnitSkill(unit);
     }

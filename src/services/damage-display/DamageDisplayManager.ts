@@ -23,18 +23,18 @@ export class DamageDisplayManager {
         let dx = 0.086203125 * math.cos(ang);
         let dy = 0.086203125 * math.sin(ang);
 
-        let dmgString = damage.toString();
+        const damageText = string.format('%d', damage);
         let tim = new Timer();
+
         if (owner == GetLocalPlayer()) {
-            let tt = CreateTextTagUnitBJ(dmgString, target, 35, size, rgb[0], rgb[1], rgb[2], 0);
+            let tt = CreateTextTagUnitBJ(damageText, target, 35, size, rgb[0], rgb[1], rgb[2], 0);
 
             SetTextTagPermanent(tt, false);
             SetTextTagFadepoint(tt, 0.4);
             if (e.isCrit) {
-                let tim = new Timer();
                 let count = 12;
                 tim.start(0.015, true, () => {
-                    if (count-- > 0) SetTextTagTextBJ(tt, dmgString, size++);
+                    if (count-- > 0) SetTextTagTextBJ(tt, damageText, size++);
                     else tim.destroy();
                 });
                 SetTextTagVelocity(tt, dx * 0.3, dy * 0.3)

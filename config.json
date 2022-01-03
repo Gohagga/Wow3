@@ -1,7 +1,7 @@
 {
-  "mapFolder": "BlackrockCaverns.w3x",
+  "mapFolder": "Wow3HeroTestMap.w3x",
   "minifyScript": false,
-  "gameExecutable": "C:\\Program Files (x86)\\Warcraft III\\_retail_\\x86_64\\Warcraft III.exe",
+  "gameExecutable": "C:\\Users\\bartul.grbin\\games\\Warcraft III\\_retail_\\x86_64\\Warcraft III.exe",
   "outputFolder": "./dist/bin",
   "archiveOutputFolders": [
     "./versions",
@@ -14,11 +14,11 @@
   },
   "mapInfo": {
     "author": "The_Spellweaver",
-    "name": "Blackrock Caverns {version}",
+    "name": "Wow3 Hero Testmap {version}",
     "description": "This is a description",
     "recommendedPlayers": "nobody should play this map",
     "loadingScreenTitle": "{version}",
-    "loadingScreenSubtitle": "Blackrock Caverns",
+    "loadingScreenSubtitle": "Wow3 Hero Testmap",
     "loadingScreenDescription": "THis is a yes map"
   },
   "launchArgs": [

@@ -16,9 +16,10 @@ export class TalentTreeBuilder implements ITalentTreeBuilder {
     set backgroundImage(v: string | null) { this.tree.backgroundImage = v; }
 
     AddTalent(x: number, y: number, talentData: TalentData): ITalentBuilder {
-        this.tree.AddTalent(x, y, talentData);
+        let talent = this.tree.AddTalent(x, y, talentData);
         return {
-            NextRank: (next: TalentData) => this.AddTalent(x, y, next)
+            NextRank: (next: TalentData) => this.AddTalent(x, y, next),
+            Talent: talent,
         }
     }
 

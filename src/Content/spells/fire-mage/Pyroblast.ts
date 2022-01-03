@@ -109,7 +109,7 @@ export class Pyroblast extends AbilityBase implements IUnitConfigurable<Pyroblas
     }
     
     GetUnitConfig = (unit: Unit) => this.unitConfig.GetUnitConfig(unit);
-    UpdateUnitConfig(unit: Unit, cb: (config: PyroblastUnitData) => void): void {
+    UpdateUnitConfig(unit: Unit, cb: (this: void, config: PyroblastUnitData) => void): void {
         this.unitConfig.UpdateUnitConfig(unit, cb);
         this.UpdateUnitSkill(unit);
     }

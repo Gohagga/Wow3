@@ -1,4 +1,10 @@
 import { Config } from "config/BlackrockCaverns";
+import { BalanceDruid } from "Content/Classes/BalanceDruid";
+import { Moonfire } from "Content/spells/balance-druid/Moonfire";
+import { NaturalBalance } from "Content/spells/balance-druid/NaturalBalance";
+import { Starfire } from "Content/spells/balance-druid/Starfire";
+import { Sunfire } from "Content/spells/balance-druid/Sunfire";
+import { Wrath } from "Content/spells/balance-druid/Wrath";
 import { Fireball } from "content/spells/fire-mage/Fireball";
 import { AbilityEventHandler } from "systems/ability-events/AbilityEventHandler";
 import { DamageEventHandler } from "systems/damage/library/DamageEventHandler";
@@ -71,6 +77,12 @@ export function Startup() {
         let aScorch = new Scorch(config.scorch, abilityEvent, damageService, heroStatService, lastTargetService, spellcastingService, aIgnite);
         let aScorchFirestarter = new ScorchFirestarter(config.scorch, aScorch, abilityEvent, damageService, heroStatService, castBarService, lastTargetService, spellcastingService);
 
+        let aMoonfire = new Moonfire(config.moonfire, abilityEvent, damageService, heroStatService, spellcastingService);
+        let aSunfire = new Sunfire(config.sunfire, abilityEvent, damageService, heroStatService, spellcastingService);
+        let aNaturalBalance = new NaturalBalance(aMoonfire, aSunfire);
+        let aWrath = new Wrath(config.wrath, abilityEvent, dummyAbilityFactory, damageService, heroStatService, spellcastingService, aNaturalBalance);
+        let aStarfire = new Starfire(config.starfire, abilityEvent, damageService, heroStatService, spellcastingService, aNaturalBalance);
+
         const abilities = {
             ignite: aIgnite,
             fireball: aFireball,
@@ -78,7 +90,13 @@ export function Startup() {
             hotStreak: aHotStreak,
             pyroblast: aPyroblast,
             scorch: aScorch,
-            scorchFirestarter: aScorchFirestarter
+            scorchFirestarter: aScorchFirestarter,
+
+            wrath: aWrath,
+            starfire: aStarfire,
+            moonfire: aMoonfire,
+            sunfire: aSunfire,
+            naturalBalance: aNaturalBalance
         }
     
         // Talent UI
@@ -86,15 +104,29 @@ export function Startup() {
         const treeVm = new BasicTalentTreeViewModel(config.talents.talentTreeViewModel, MapPlayer.fromIndex(0), treeUi,
             (i) => new BasicTalentViewModel(config.talents.talentViewModel, GenerateBasicTalentView(config.talents.talentView, treeUi.window, i.toString())));
 
-        const tree = new FireMage(Unit.fromHandle(gg_unit_H000_0020), skillManager, heroStatService, abilities);
-        treeVm.SetTree(tree);
-        treeVm.Show();
+        const testUnit = Unit.fromHandle(gg_unit_E000_0003);
+        const tree = new BalanceDruid(testUnit, skillManager, heroStatService, abilities);
+        // treeVm.SetTree(tree);
+        // treeVm.Show();
 
-        let openTrg = new Trigger();
-        openTrg.registerPlayerChatEvent(MapPlayer.fromIndex(0), '-tt', true);
-        openTrg.addAction(() => {
+        const testUnit2 = Unit.fromHandle(gg_unit_Hblm_0002);
+        const tree2 = new FireMage(testUnit2, skillManager, heroStatService, abilities);
+        // treeVm.SetTree(tree2);
+        // treeVm.Show();
+
+        let t = new Trigger();
+        t.registerPlayerChatEvent(MapPlayer.fromIndex(0), '-druid', true);
+        t.addAction(() => {
+            treeVm.SetTree(tree);
             treeVm.Show();
-        })
+        });
+
+        let t2 = new Trigger();
+        t2.registerPlayerChatEvent(MapPlayer.fromIndex(0), '-mage', true);
+        t2.addAction(() => {
+            treeVm.SetTree(tree2);
+            treeVm.Show();
+        });
         
     } catch (ex: any) {
         Log.Error(ex);
